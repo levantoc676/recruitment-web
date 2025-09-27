@@ -26,7 +26,7 @@ public class SecurityConfig {
             .anyRequest().authenticated()
         )
         .formLogin(form -> form
-            .loginPage("/auth/login1")             // GET hiển thị form
+            .loginPage("/")             // GET hiển thị form
             .loginProcessingUrl("/auth/login")    // POST submit form
             .defaultSuccessUrl("/layout/index", true)
             .failureUrl("/auth/login?error=true")

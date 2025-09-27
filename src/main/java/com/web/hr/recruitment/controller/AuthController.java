@@ -19,13 +19,6 @@ public class AuthController {
   @Autowired
   private UserRepository userRepository;
 
-  // URL: http://localhost:8080/auth/login
-  @GetMapping("/login1")
-  public String login() {
-    return "auth/login";
-    // -> Spring Boot sẽ tìm file templates/auth/login.html
-  }
-
   @PostMapping("/login")
   public String login(@RequestParam String email,
       @RequestParam String password,
@@ -49,13 +42,4 @@ public class AuthController {
     // -> Spring Boot sẽ tìm file templates/auth/register.html
   }
 
-  @GetMapping("/index")
-  public String index() {
-    return "layout/index";
-  }
-
-  @GetMapping("/dashboard")
-  public String dashboard() {
-    return "layout/dashboard";
-  }
 }
