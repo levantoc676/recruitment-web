@@ -15,50 +15,47 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-    @Autowired
-    private UserRepository userRepository;
 
-    // URL: http://localhost:8080/auth/login
-    @GetMapping("/login1")
-    public String login() {
-        return "auth/login";
-        // -> Spring Boot sẽ tìm file templates/auth/login.html
+  @Autowired
+  private UserRepository userRepository;
+
+  // URL: http://localhost:8080/auth/login
+  @GetMapping("/login1")
+  public String login() {
+    return "auth/login";
+    // -> Spring Boot sẽ tìm file templates/auth/login.html
+  }
+
+  @PostMapping("/login")
+  public String login(@RequestParam String email,
+      @RequestParam String password,
+      Model model) {
+
+    Optional<User> userOpt = userRepository.findByUser(email, password);
+    if (userOpt.isPresent()) {
+      // Login thành công -> chuyển tới index
+      return "redirect:/auth/index";
+    } else {
+      // Login thất bại -> hiển thị message trên trang login
+      model.addAttribute("errorMessage", "Sai tên đăng nhập hoặc mật khẩu");
+      return "auth/login";  // Không redirect, trả về template
     }
+  }
 
-    @PostMapping("/login")
-    public String login(@RequestParam String email,
-        @RequestParam String password,
-        Model model) {
+  // URL: http://localhost:8080/auth/register
+  @GetMapping("/register")
+  public String register() {
+    return "auth/register";
+    // -> Spring Boot sẽ tìm file templates/auth/register.html
+  }
 
-        Optional<User> userOpt = userRepository.findByUser(email, password);
-        if(userOpt.isPresent()) {
-            // Login thành công -> chuyển tới index
-            return "redirect:/auth/index";
-        } else {
-            // Login thất bại -> hiển thị message trên trang login
-            model.addAttribute("errorMessage", "Sai tên đăng nhập hoặc mật khẩu");
-            return "auth/login";  // Không redirect, trả về template
-        }
-    }
+  @GetMapping("/index")
+  public String index() {
+    return "layout/index";
+  }
 
-
-    // URL: http://localhost:8080/auth/register
-    @GetMapping("/register")
-    public String register() {
-        return "auth/register";
-        // -> Spring Boot sẽ tìm file templates/auth/register.html
-    }
-<<<<<<< HEAD
-
-    // URL: http://localhost:8080/auth/register
-    @GetMapping("/index")
-    public String index() {
-        return "layout/index";
-=======
-    @GetMapping("/dashboard")
-    public String dashboard() {
-        return "layout/dashboard";
->>>>>>> loilv_dev1
-        // -> Spring Boot sẽ tìm file templates/auth/register.html
-    }
+  @GetMapping("/dashboard")
+  public String dashboard() {
+    return "layout/dashboard";
+  }
 }
