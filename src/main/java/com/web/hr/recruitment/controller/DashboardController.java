@@ -9,7 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DashboardController {
   // URL: http://localhost:8080/
   @GetMapping("/")
-  public String login() {
+  public String index() {
     return "index";
+  }
+
+  @GetMapping("/login")
+  public String login() {
+    return "auth/login";
   }
 }

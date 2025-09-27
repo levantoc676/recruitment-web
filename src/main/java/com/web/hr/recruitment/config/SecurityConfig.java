@@ -22,13 +22,12 @@ public class SecurityConfig {
     http
         .csrf(AbstractHttpConfigurer::disable) // Nếu REST API, disable CSRF
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/auth/**", "/css/**", "/js/**", "/images/**").permitAll()
+            .requestMatchers("/**", "/auth/**", "/css/**", "/js/**", "/images/**").permitAll()
             .anyRequest().authenticated()
         )
         .formLogin(form -> form
-            .loginPage("/")             // GET hiển thị form
-            .loginProcessingUrl("/auth/login")    // POST submit form
-            .defaultSuccessUrl("/layout/index", true)
+            .loginPage("/login")             // GET hiển thị form
+            .defaultSuccessUrl("/", true)
             .failureUrl("/auth/login?error=true")
             .permitAll()
         )

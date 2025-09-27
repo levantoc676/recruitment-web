@@ -27,10 +27,11 @@ public class AuthController {
     Optional<User> userOpt = userRepository.findByUser(email, password);
     if (userOpt.isPresent()) {
       // Login thành công -> chuyển tới index
-      return "redirect:/auth/index";
+      return "redirect:/";
     } else {
       // Login thất bại -> hiển thị message trên trang login
       model.addAttribute("errorMessage", "Sai tên đăng nhập hoặc mật khẩu");
+      model.addAttribute("email", email);  // giữ email nhập
       return "auth/login";  // Không redirect, trả về template
     }
   }
