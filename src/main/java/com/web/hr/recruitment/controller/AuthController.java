@@ -48,11 +48,17 @@ public class AuthController {
         return "auth/register";
         // -> Spring Boot sẽ tìm file templates/auth/register.html
     }
+<<<<<<< HEAD
 
     // URL: http://localhost:8080/auth/register
     @GetMapping("/index")
     public String index() {
         return "layout/index";
+=======
+    @GetMapping("/dashboard")
+    public String dashboard() {
+        return "layout/dashboard";
+>>>>>>> loilv_dev1
         // -> Spring Boot sẽ tìm file templates/auth/register.html
     }
 }
