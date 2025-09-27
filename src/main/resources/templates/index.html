@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm Việc - TopCV.vn (Demo)</title> <!-- đổi tiêu đề để rõ đây là bản demo -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+
+<!-- Header -->
+<header>
+    <div class="logo">TopCV</div>
+    <nav>
+        <ul>
+            <li>Việc làm</li>
+            <li>Tạo CV</li>
+            <li>Công cụ</li>
+            <li>Cẩm nang nghề nghiệp</li>
+            <li>TopCV Pro</li>
+        </ul>
+    </nav>
+    <div class="auth-buttons">
+        <button>Đăng ký</button>
+        <button>Đăng nhập</button>
+        <button>Đăng tuyển & tìm hồ sơ</button>
+    </div>
+</header>
+
+<!-- Banner Search -->
+<section class="banner">
+    <h1>TopCV - Tạo CV, Tìm việc làm, Tuyển dụng hiệu quả</h1>
+    <div class="search-bar">
+        <input type="text" placeholder="Vị trí tuyển dụng, tên công ty">
+        <input type="text" placeholder="Địa điểm">
+        <button>Tìm kiếm</button>
+    </div>
+</section>
+
+<!-- Categories -->
+<section class="categories">
+    <ul>
+        <li>Kinh doanh/Bán hàng</li>
+        <li>Marketing/PR/Quảng cáo</li>
+        <li>Chăm sóc khách hàng</li>
+        <li>Nhân sự/Hành chính/Pháp chế</li>
+        <li>Công nghệ Thông tin</li>
+        <li>Lao động phổ thông</li>
+    </ul>
+</section>
+
+<!-- Job Listings -->
+<section class="job-listings">
+    <h2>Việc làm tốt nhất</h2>
+    <div class="jobs">
+        <div class="job">
+            <h3>Assistant Brand Manager (ABM)</h3>
+            <p>Công ty TNHH Trầm Hương Hoàng Giang</p>
+            <span>10 - 15 triệu | Hồ Chí Minh</span>
+        </div>
+        <div class="job">
+            <h3>Chuyên Viên Đào Tạo Gia Sư Tiếng Anh</h3>
+            <p>EDUPIA</p>
+            <span>Tới 17 triệu | Hà Nội</span>
+        </div>
+        <!-- Thêm job khác -->
+    </div>
+</section>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script th:src="@{/js/app.js}"></script>
+</body>
+<footer>
+    <p>&copy; 2025 TopCV Demo. Tất cả quyền được bảo lưu.</p> <!-- đổi chữ TopCV.vn -> TopCV Demo -->
+</footer>
+</html>
