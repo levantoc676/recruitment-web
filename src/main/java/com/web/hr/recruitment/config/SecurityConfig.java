@@ -17,7 +17,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated() // các request khác phải login
                 )
                 .formLogin(form -> form
-                        .loginPage("/auth/dashboard")    // dùng login.html của bạn
+                        .loginPage("/auth/login")    // dùng login.html của bạn
                         .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll);

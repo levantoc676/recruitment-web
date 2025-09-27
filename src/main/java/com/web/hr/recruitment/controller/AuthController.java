@@ -21,9 +21,9 @@ public class AuthController {
         return "auth/register";
         // -> Spring Boot sẽ tìm file templates/auth/register.html
     }
-    @GetMapping("/dashboard")
-    public String dashboard() {
-        return "layout/dashboard";
-        // -> Spring Boot sẽ tìm file templates/auth/register.html
+    @GetMapping("/index")
+    public String index() {
+        return "dashboard/index";
+        // -> Spring Boot sẽ tìm file templates/dashboard/index.html
     }
 }
