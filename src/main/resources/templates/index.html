@@ -21,8 +21,16 @@
     </ul>
   </nav>
   <div class="auth-buttons">
-    <button>Đăng ký</button>
-    <button onclick="location.href='/login'">Đăng nhập</button>
+    <div th:if="${session.user == null}">
+      <button>Đăng ký</button>
+      <button onclick="location.href='/login'">Đăng nhập</button>
+    </div>
+
+    <div th:if="${session.user != null}">
+      Xin chào, <span th:text="${session.user.username}"></span>!
+      <button onclick="location.href='/logout'">Đăng xuất</button>
+    </div>
+
     <button>Đăng tuyển & tìm hồ sơ</button>
   </div>
 </header>
@@ -53,15 +61,10 @@
 <section class="job-listings">
   <h2>Việc làm tốt nhất</h2>
   <div class="jobs">
-    <div class="job">
-      <h3>Assistant Brand Manager (ABM)</h3>
-      <p>Công ty TNHH Trầm Hương Hoàng Giang</p>
-      <span>10 - 15 triệu | Hồ Chí Minh</span>
-    </div>
-    <div class="job">
-      <h3>Chuyên Viên Đào Tạo Gia Sư Tiếng Anh</h3>
-      <p>EDUPIA</p>
-      <span>Tới 17 triệu | Hà Nội</span>
+    <div class="job" th:each="job : ${jobs}">
+      <h3 th:text="${job.title}"></h3>
+      <p th:text="${job.description}"></p>
+      <span th:text="${job.salaryRange + ' | ' + job.location}"></span>
     </div>
     <!-- Thêm job khác -->
   </div>

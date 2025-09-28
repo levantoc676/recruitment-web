@@ -14,7 +14,8 @@
   <form class="w-50 mx-auto" method="post" th:action="@{/auth/login}">
     <div class="mb-3">
       <label>Email</label>
-      <input class="form-control" name="email" required th:value="${email}"
+      <input class="form-control" name="email" required
+             th:value="${email != null ? email : 'candidate01@example.com'}"
              type="email"> <!-- giữ email khi login thất bại -->
     </div>
     <div class="mb-3">
