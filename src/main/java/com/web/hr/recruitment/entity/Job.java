@@ -8,125 +8,138 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "jobs")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Job {
 
+  // =============================
+  // Khóa chính
+  // =============================
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer jobId;
+  private Long jobId;   // ID của Job
 
+  // =============================
+  // Thông tin công ty
+  // =============================
+  @Column(name = "company_name")
+  private String companyName; // Tên công ty
+
+  // =============================
+  // Nội dung công việc
+  // =============================
+  @Column(nullable = false)
+  private String title; // Tiêu đề công việc
+
+  @Column(columnDefinition = "TEXT")
+  private String description; // Mô tả công việc
+
+  @Column(columnDefinition = "TEXT")
+  private String requirements; // Yêu cầu công việc
+
+  @Column(columnDefinition = "TEXT")
+  private String skills; // Kỹ năng yêu cầu
+
+  @Column(columnDefinition = "TEXT")
+  private String benefits; // Quyền lợi, phúc lợi
+
+  // =============================
+  // Thông tin tuyển dụng
+  // =============================
+  private String location; // Địa điểm làm việc
+
+  @Column(name = "work_mode")
+  private String workMode;   // Hình thức làm việc: Onsite, Hybrid, Remote
+
+  @Column(name = "job_type")
+  private String jobType;    // Loại công việc: Full-time, Part-time, Intern...
+
+  private String industry; // Ngành nghề
+
+  @Column(name = "salary_range")
+  private String salaryRange; // Mức lương dự kiến
+
+  @Column(name = "experience_level")
+  private String experienceLevel; // Kinh nghiệm yêu cầu
+
+  @Column(name = "education_level")
+  private String educationLevel; // Trình độ học vấn
+
+  private LocalDate deadline; // Hạn nộp hồ sơ
+
+  @Column(name = "logo_path")
+  private String logoPath; // Đường dẫn logo công ty (nếu có)
+
+  // =============================
+  // Trạng thái & thống kê
+  // =============================
+  @Column(name = "employment_status")
+  private String employmentStatus = "Open"; // Trạng thái tuyển dụng: Open/Closed
+
+  private Integer views = 0; // Số lượt xem job
+
+  @Column(name = "applications_count")
+  private Integer applicationsCount = 0; // Số lượt ứng tuyển
+
+  @Column(name = "del_flg")
+  private Boolean delFlg = false; // Cờ xóa mềm
+
+  // =============================
+  // Audit
+  // =============================
+  @Column(name = "created_by")
+  private Long createdBy; // ID người tạo
+
+  @Column(name = "create_date", updatable = false)
+  private LocalDateTime createDate; // Ngày tạo
+
+  @Column(name = "updated_date")
+  private LocalDateTime updatedDate; // Ngày cập nhật
+
+  // =============================
+  // Quan hệ với User (Employer)
+  // =============================
   @ManyToOne
-  @JoinColumn(name = "employer_id", nullable = false)
-  private User employer;
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user; // Nhà tuyển dụng tạo job
 
-  private String title;
-  @Column(columnDefinition = "TEXT")
-  private String description;
-  @Column(columnDefinition = "TEXT")
-  private String requirements;
-  private String location;
-  private String salaryRange;
-  private String jobType; // full-time, part-time, intern
-
-  private LocalDateTime createDate = LocalDateTime.now();
-  private LocalDateTime updatedDate = LocalDateTime.now();
-  private Boolean delFlg = true;
-
+  // =============================
+  // Quan hệ với JobApplication
+  // =============================
   @OneToMany(mappedBy = "job")
-  private List<JobCv> applications;
+  private List<JobApplication> applications; // Các ứng tuyển cho job này
+  private Integer headcount;
+  private String applicationMethod;
+  private String contactEmail;
+  private String contactPhone;
 
-  // getters and setters
-
-  public Boolean getDelFlg() {
-    return delFlg;
+  // =============================
+  // Callback tự động set ngày giờ
+  // =============================
+  @PrePersist
+  public void prePersist() {
+    this.createDate = LocalDateTime.now();
+    this.updatedDate = LocalDateTime.now();
   }
 
-  public void setDelFlg(Boolean delFlg) {
-    this.delFlg = delFlg;
+  @PreUpdate
+  public void preUpdate() {
+    this.updatedDate = LocalDateTime.now();
   }
 
-  public LocalDateTime getUpdatedDate() {
-    return updatedDate;
-  }
-
-  public void setUpdatedDate(LocalDateTime updatedDate) {
-    this.updatedDate = updatedDate;
-  }
-
-  public LocalDateTime getCreateDate() {
-    return createDate;
-  }
-
-  public void setCreateDate(LocalDateTime createDate) {
-    this.createDate = createDate;
-  }
-
-  public String getJobType() {
-    return jobType;
-  }
-
-  public void setJobType(String jobType) {
-    this.jobType = jobType;
-  }
-
-  public String getSalaryRange() {
-    return salaryRange;
-  }
-
-  public void setSalaryRange(String salaryRange) {
-    this.salaryRange = salaryRange;
-  }
-
-  public String getLocation() {
-    return location;
-  }
-
-  public void setLocation(String location) {
-    this.location = location;
-  }
-
-  public String getRequirements() {
-    return requirements;
-  }
-
-  public void setRequirements(String requirements) {
-    this.requirements = requirements;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public User getEmployer() {
-    return employer;
-  }
-
-  public void setEmployer(User employer) {
-    this.employer = employer;
-  }
-
-  public Integer getJobId() {
-    return jobId;
-  }
-
-  public void setJobId(Integer jobId) {
-    this.jobId = jobId;
-  }
 }

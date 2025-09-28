@@ -9,149 +9,69 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "users")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
 
+  // =============================
+  // Khóa chính
+  // =============================
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer userId;
+  private Long userId;
 
+  // =============================
+  // Thông tin cơ bản của User
+  // =============================
   @Column(nullable = false, unique = true, length = 50)
-  private String username;
+  private String username; // Tên đăng nhập
 
   @Column(nullable = false, length = 100)
-  private String password;
+  private String password; // Mật khẩu (nên mã hóa)
 
   @Column(nullable = false, unique = true, length = 100)
-  private String email;
+  private String email; // Email của user
 
   @Column(length = 100)
-  private String fullName;
+  private String fullName; // Họ và tên đầy đủ
 
   @Column(nullable = false, length = 100)
-  private String role; // candidate, employer, admin
+  private String role; // Vai trò: candidate, employer, admin
 
   @Column(length = 20)
-  private String phone;
+  private String phone; // Số điện thoại
 
-  private LocalDateTime createDate = LocalDateTime.now();
-  private LocalDateTime updatedDate = LocalDateTime.now();
+  // =============================
+  // Thông tin quản lý
+  // =============================
+  private LocalDateTime createDate = LocalDateTime.now(); // Ngày tạo
+  private LocalDateTime updatedDate = LocalDateTime.now(); // Ngày cập nhật
+  private Boolean delFlg = true; // Cờ xóa mềm (true = xóa, false = còn)
 
-  private Boolean delFlg = true;
-
-  // Relationships
+  // =============================
+  // Quan hệ với CV
+  // =============================
   @OneToMany(mappedBy = "user")
-  private List<Cv> cvs;
+  private List<CV> cvs; // Danh sách CV của user (ứng viên)
 
-  @OneToMany(mappedBy = "employer")
-  private List<Job> jobs;
+  // =============================
+  // Quan hệ với Job
+  // =============================
+  @OneToMany(mappedBy = "user")
+  private List<Job> jobs; // Danh sách Job do user (employer) tạo
 
+  // =============================
+  // Quan hệ với AdminLog
+  // =============================
   @OneToMany(mappedBy = "admin")
-  private List<AdminLog> adminLogs;
-  
-  public Integer getUserId() {
-    return userId;
-  }
-
-  public void setUserId(Integer userId) {
-    this.userId = userId;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getFullName() {
-    return fullName;
-  }
-
-  public void setFullName(String fullName) {
-    this.fullName = fullName;
-  }
-
-  public String getRole() {
-    return role;
-  }
-
-  public void setRole(String role) {
-    this.role = role;
-  }
-
-  public String getPhone() {
-    return phone;
-  }
-
-  public void setPhone(String phone) {
-    this.phone = phone;
-  }
-
-  public LocalDateTime getCreateDate() {
-    return createDate;
-  }
-
-  public void setCreateDate(LocalDateTime createDate) {
-    this.createDate = createDate;
-  }
-
-  public LocalDateTime getUpdatedDate() {
-    return updatedDate;
-  }
-
-  public void setUpdatedDate(LocalDateTime updatedDate) {
-    this.updatedDate = updatedDate;
-  }
-
-  public Boolean getDelFlg() {
-    return delFlg;
-  }
-
-  public void setDelFlg(Boolean delFlg) {
-    this.delFlg = delFlg;
-  }
-
-  public List<Cv> getCvs() {
-    return cvs;
-  }
-
-  public void setCvs(List<Cv> cvs) {
-    this.cvs = cvs;
-  }
-
-  public List<Job> getJobs() {
-    return jobs;
-  }
-
-  public void setJobs(List<Job> jobs) {
-    this.jobs = jobs;
-  }
-
-  public List<AdminLog> getAdminLogs() {
-    return adminLogs;
-  }
-
-  public void setAdminLogs(List<AdminLog> adminLogs) {
-    this.adminLogs = adminLogs;
-  }
+  private List<AdminLog> adminLogs; // Các log do admin thực hiện
 }

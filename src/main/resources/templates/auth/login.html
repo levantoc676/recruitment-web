@@ -3,36 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <title>Login - Recruitment Web</title>
-  <link rel="stylesheet" th:href="@{/css/main.css}">
-  <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/auth-login.css}">
 </head>
 <body>
-<div th:replace="layout/header :: header"></div>
+<div th:insert="~{layout/header :: header}"></div>
 
 <main class="container mt-4">
   <h2 class="text-center">Login</h2>
-  <form class="w-50 mx-auto" method="post" th:action="@{/auth/login}">
+  <form class="w-50 mx-auto" method="post" th:action="@{/auth/login-web}">
     <div class="mb-3">
       <label>Email</label>
       <input class="form-control" name="email" required
-             th:value="${email != null ? email : 'candidate01@example.com'}"
-             type="email"> <!-- giữ email khi login thất bại -->
+             th:value="${email != null ? email : 'employer1@example.com'}" type="email">
+      <!-- giữ email khi login thất bại -->
     </div>
     <div class="mb-3">
       <label>Password</label>
       <input class="form-control" name="password" required type="password">
     </div>
-    <!-- Hiển thị message lỗi -->
-    <div class="text-danger mb-3" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+    <!-- Hiển thị message khi login fail -->
+    <div style="color:red;" th:if="${param.error}">
+      Sai tên đăng nhập hoặc mật khẩu
+    </div>
     <button class="btn btn-primary w-100">Login</button>
-    <p class="mt-3 text-center">
-      Don’t have an account? <a th:href="@{/register}">Register</a>
+    <p class="mt-3 text-center"> Don’t have an account? <a th:href="@{/register}">Register</a>
     </p>
   </form>
-
 </main>
-
-<div th:replace="layout/footer :: footer"></div>
+<div th:insert="~{layout/footer :: footer}"></div>
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

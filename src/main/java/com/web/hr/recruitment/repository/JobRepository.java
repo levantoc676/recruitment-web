@@ -1,12 +1,10 @@
 package com.web.hr.recruitment.repository;
 
 import com.web.hr.recruitment.entity.Job;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface JobRepository extends JpaRepository<Job, Long> {
-
-  @Query(value = "SELECT * FROM jobs", nativeQuery = true)
-  Optional<Job> findTop10Jobs();
+  // Có thể thêm custom query nếu cần
 }

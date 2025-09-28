@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -7,33 +7,9 @@
   <link rel="stylesheet" th:href="@{/css/style.css}">
 
 </head>
-
+<body>
 <!-- Header -->
-<header>
-  <div class="logo">TopCV</div>
-  <nav>
-    <ul>
-      <li>Việc làm</li>
-      <li>Tạo CV</li>
-      <li>Công cụ</li>
-      <li>Cẩm nang nghề nghiệp</li>
-      <li>TopCV Pro</li>
-    </ul>
-  </nav>
-  <div class="auth-buttons">
-    <div th:if="${session.user == null}">
-      <button>Đăng ký</button>
-      <button onclick="location.href='/login'">Đăng nhập</button>
-    </div>
-
-    <div th:if="${session.user != null}">
-      Xin chào, <span th:text="${session.user.username}"></span>!
-      <button onclick="location.href='/logout'">Đăng xuất</button>
-    </div>
-
-    <button>Đăng tuyển & tìm hồ sơ</button>
-  </div>
-</header>
+<div th:replace="layout/header :: header"></div>
 
 <!-- Banner Search -->
 <section class="banner">
@@ -69,6 +45,9 @@
     <!-- Thêm job khác -->
   </div>
 </section>
+<!-- Footer -->
+<div th:replace="layout/footer :: footer"></div>
+
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
@@ -79,7 +58,4 @@
 
 <script th:src="@{/js/app.js}"></script>
 </body>
-<footer>
-  <p>&copy; 2025 TopCV Demo. Tất cả quyền được bảo lưu.</p> <!-- đổi chữ TopCV.vn -> TopCV Demo -->
-</footer>
 </html>

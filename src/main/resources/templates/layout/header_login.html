@@ -1,13 +1,15 @@
 <!-- file chỉ là fragment, vẫn cần khai báo namespace -->
-<div xmlns:th="http://www.thymeleaf.org" th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" th:href="@{/}">Recruitment Web</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" th:href="@{/jobs}">Jobs</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/candidate/profile}">Profile</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
-            </ul>
-        </div>
+<div th:fragment="header" xmlns:th="http://www.thymeleaf.org">
+  <header>
+    <div class="logo">TopCV</div>
+    <nav>
+      <ul>
+        <li>Việc làm</li>
+        <li>Tạo CV</li>
+        <li>Công cụ</li>
+        <li>Cẩm nang nghề nghiệp</li>
+        <li>TopCV Pro</li>
+      </ul>
     </nav>
+  </header>
 </div>

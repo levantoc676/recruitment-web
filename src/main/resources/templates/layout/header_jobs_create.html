@@ -1,0 +1,26 @@
+<!-- file chỉ là fragment, vẫn cần khai báo namespace -->
+<div th:fragment="header_jobs_create" xmlns:th="http://www.thymeleaf.org">
+  <header>
+    <div class="logo">TopCV</div>
+    <nav>
+      <ul>
+        <li>Việc làm</li>
+        <li>Tạo CV</li>
+        <li>Công cụ</li>
+        <li>Cẩm nang nghề nghiệp</li>
+        <li>TopCV Pro</li>
+      </ul>
+    </nav>
+    <div class="auth-buttons">
+      <!-- Nếu đã login -->
+      <div th:if="${#authentication.authenticated}">
+        Xin chào, <span th:text="${#authentication.name}"></span>!
+        <button onclick="location.href='/auth/logout'">Đăng xuất</button>
+        <span th:each="auth : ${#authentication.authorities}"
+              th:text="${auth.authority} + ' '"></span>
+
+      </div>
+    </div>
+
+  </header>
+</div>

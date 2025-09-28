@@ -1,0 +1,7 @@
+.container {
+    margin-top: 100px !important; /* header height */
+    padding: 30px 15px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}

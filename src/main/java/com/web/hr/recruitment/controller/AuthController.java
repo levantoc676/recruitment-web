@@ -19,17 +19,22 @@ public class AuthController {
   @Autowired
   private UserRepository userRepository;
 
-  @PostMapping("/login")
+  @GetMapping("/login")
+  public String login() {
+    System.out.println("AAAAAAAAAAAAAAAAA");
+    return "auth/login";
+  }
+
+  @PostMapping("/login-web")
   public String login(@RequestParam String email,
       @RequestParam String password,
       Model model, HttpSession session) {
-
+    System.out.println("XXXXXXXXXXXXXXXXXXX");
     Optional<User> userOpt = userRepository.findByUser(email, password);
     if (userOpt.isPresent()) {
       // Login thành công -> chuyển tới index
-//      redirectAttributes.addFlashAttribute("user", userOpt.get());
       session.setAttribute("user", userOpt.get());
-      return "redirect:/";
+      return "redirect:/index";
     } else {
       // Login thất bại -> hiển thị message trên trang login
       model.addAttribute("errorMessage", "Sai tên đăng nhập hoặc mật khẩu");
@@ -43,6 +48,14 @@ public class AuthController {
   public String register() {
     return "auth/register";
     // -> Spring Boot sẽ tìm file templates/auth/register.html
+  }
+
+  @GetMapping("/logout")
+  public String logout(HttpSession session) {
+    // Xóa toàn bộ session
+    session.invalidate();
+    // Sau đó quay về trang login
+    return "redirect:/login";
   }
 
 }
