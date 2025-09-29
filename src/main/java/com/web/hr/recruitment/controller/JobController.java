@@ -78,14 +78,14 @@ public class JobController {
   public String listJobs(Model model) {
     List<Job> jobs = jobService.getAllJobs();
     model.addAttribute("jobs", jobs);
-    return "job/job-list"; // templates/job-list.html
+    return "jobs/job-list"; // templates/job-list.html
   }
 
   // Chi tiết job
   @GetMapping("/{id}")
   public String jobDetail(@PathVariable Long id, Model model) {
     jobService.getJobById(id).ifPresent(job -> model.addAttribute("job", job));
-    return "job/job-detail"; // templates/job-detail.html
+    return "jobs/job-detail"; // templates/job-detail.html
   }
 
   // Xóa job
@@ -93,5 +93,53 @@ public class JobController {
   public String deleteJob(@PathVariable Long id) {
     jobService.deleteJob(id);
     return "redirect:/jobs/list";
+  }
+
+  // Hiển thị form edit
+  @GetMapping("/edit/{id}")
+  public String showEditForm(@PathVariable("id") Long id, Model model) {
+    Job job = jobService.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Invalid job Id:" + id));
+    model.addAttribute("job", job);
+    return "edit-job"; // tên file HTML form edit
+  }
+
+  @PostMapping("/update/{id}")
+  public String updateJob(
+      @PathVariable("id") Long id,
+      @ModelAttribute("job") Job jobDetails,
+      @RequestParam(value = "logoFile", required = false) MultipartFile logoFile
+  ) {
+    Job job = jobService.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Invalid job Id: " + id));
+
+    // Cập nhật các trường cơ bản
+    job.setTitle(jobDetails.getTitle());
+    job.setDescription(jobDetails.getDescription());
+    job.setRequirements(jobDetails.getRequirements());
+    job.setBenefits(jobDetails.getBenefits());
+    job.setSkills(jobDetails.getSkills());
+    job.setLocation(jobDetails.getLocation());
+    job.setSalaryRange(jobDetails.getSalaryRange());
+    job.setHeadcount(jobDetails.getHeadcount());
+    job.setIndustry(jobDetails.getIndustry());
+    job.setDeadline(jobDetails.getDeadline());
+    job.setContactEmail(jobDetails.getContactEmail());
+    job.setContactPhone(jobDetails.getContactPhone());
+    job.setUpdatedDate(java.time.LocalDateTime.now());
+
+    // Nếu có upload logo mới
+//    try {
+//      if (logoFile != null && !logoFile.isEmpty()) {
+//        byte[] logoBytes = logoFile.getBytes();
+//        job.setLogo(logoBytes); // hoặc lưu path nếu bạn cấu hình upload ra file
+//      }
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//      // có thể log warning nhưng không chặn update
+//    }
+
+    jobService.saveJob(job);
+    return "redirect:/jobs/list"; // hoặc index tùy flow của bạn
   }
 }

@@ -15,4 +15,6 @@ public interface JobService {
   Optional<Job> getJobById(Long id);
 
   void deleteJob(Long id);
+
+  Optional<Job> findById(Long id);
 }

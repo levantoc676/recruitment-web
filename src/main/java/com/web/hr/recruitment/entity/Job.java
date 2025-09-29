@@ -102,9 +102,6 @@ public class Job {
   // =============================
   // Audit
   // =============================
-  @Column(name = "created_by")
-  private Long createdBy; // ID người tạo
-
   @Column(name = "create_date", updatable = false)
   private LocalDateTime createDate; // Ngày tạo
 

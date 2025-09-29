@@ -32,17 +32,17 @@
     <tbody>
     <tr th:each="job : ${jobs}">
       <td th:text="${job.title}">Java Developer</td>
-      <td th:text="${job.employer.name}">Công ty ABC</td>
+      <!--      <td th:text="${job.employer.name}">Công ty ABC</td>-->
       <td th:text="${job.location}">Hồ Chí Minh</td>
       <td th:text="${job.salaryRange}">10 - 15 triệu</td>
       <td th:text="${job.jobType}">Full-time</td>
-      <td th:text="${#dates.format(job.createDate, 'dd/MM/yyyy')}">28/09/2025</td>
+      <!--      <td th:text="${#dates.format(job.createDate, 'dd/MM/yyyy')}">28/09/2025</td>-->
       <td>
-        <a class="btn btn-info btn-sm" th:href="@{'/jobs/' + ${job.id}}">Xem</a>
-        <a class="btn btn-warning btn-sm" th:href="@{'/jobs/edit/' + ${job.id}}">Sửa</a>
+        <a class="btn btn-info btn-sm" th:href="@{'/jobs/' + ${job.jobId}}">Xem</a>
+        <a class="btn btn-warning btn-sm" th:href="@{'/jobs/edit/' + ${job.jobId}}">Sửa</a>
         <a class="btn btn-danger btn-sm"
            onclick="return confirm('Bạn có chắc muốn xóa tin này?');"
-           th:href="@{'/jobs/delete/' + ${job.id}}">Xóa</a>
+           th:href="@{'/jobs/delete/' + ${job.jobId}}">Xóa</a>
       </td>
     </tr>
     </tbody>
