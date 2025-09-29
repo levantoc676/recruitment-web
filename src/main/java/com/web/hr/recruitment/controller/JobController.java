@@ -101,7 +101,7 @@ public class JobController {
     Job job = jobService.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("Invalid job Id:" + id));
     model.addAttribute("job", job);
-    return "edit-job"; // tên file HTML form edit
+    return "jobs/post-job"; // tên file HTML form edit
   }
 
   @PostMapping("/update/{id}")
