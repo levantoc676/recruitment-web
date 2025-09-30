@@ -35,15 +35,17 @@
 
 <!-- Job Listings -->
 <section class="job-listings">
-  <h2>Việc làm tốt nhất</h2>
+  <h2>Danh sách việc làm</h2>
   <div class="jobs">
-    <div class="job" th:each="job : ${jobs}">
-      <h3 th:text="${job.title}"></h3>
-      <p th:text="${job.description}"></p>
-      <span th:text="${job.salaryRange + ' | ' + job.location}"></span>
-    </div>
-    <!-- Thêm job khác -->
+    <a th:href="@{/jobs/{id}(id=${job.jobId})}" class="job-link" th:each="job : ${jobs}">
+      <div class="job">
+        <h3 th:text="${job.title}"></h3>
+        <p th:text="${job.description}"></p>
+        <span th:text="${job.salaryRange + ' | ' + job.location}"></span>
+      </div>
+    </a>
   </div>
+
 </section>
 <!-- Footer -->
 <div th:replace="layout/footer :: footer"></div>

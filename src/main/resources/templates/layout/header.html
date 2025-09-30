@@ -1,37 +1,37 @@
 <!-- file chỉ là fragment, vẫn cần khai báo namespace -->
-<div th:fragment="header" xmlns:th="http://www.thymeleaf.org">
-  <header>
-    <div class="logo">TopCV</div>
-    <nav>
-      <ul>
-        <li>Việc làm</li>
-        <li>Tạo CV</li>
-        <li>Công cụ</li>
-        <li>Cẩm nang nghề nghiệp</li>
-        <li>TopCV Pro</li>
-      </ul>
-    </nav>
-    <div class="auth-buttons">
-      <!-- Nếu chưa login -->
-      <div th:if="${not #authentication.authenticated}">
-        <button>Đăng ký</button>
-        <button onclick="location.href='/auth/login'">Đăng nhập</button>
-      </div>
-
-      <!-- Nếu đã login -->
-      <div th:if="${#authentication.authenticated}">
-        Xin chào, <span th:text="${#authentication.name}"></span>!
-        <span th:each="auth : ${#authentication.authorities}"
-              th:text="${auth.authority} + ' '"></span>
-        <button onclick="location.href='/auth/logout'">Đăng xuất</button>
-
-        <!-- Hiển thị nút 'Đăng tuyển' chỉ cho EMPLOYER hoặc ADMIN -->
-        <button onclick="location.href='/jobs/create'"
-                th:if="${#authorization.expression('hasRole(''EMPLOYER'') or hasRole(''ADMIN'')')}">
-          Đăng tuyển
-        </button>
-      </div>
+<header th:fragment="header" xmlns:th="http://www.thymeleaf.org">
+  <div class="logo"><a href="/index" class="logo">TopCV</a></div>
+  <nav class="nav-menu">
+    <ul>
+      <li><a href="/jobs">Việc làm</a></li>
+      <li><a href="/cv/create">Tạo CV</a></li>
+      <li><a href="/tools">Công cụ</a></li>
+      <li><a href="/blog">Cẩm nang nghề nghiệp</a></li>
+      <li><a href="/pro">TopCV Pro</a></li>
+    </ul>
+  </nav>
+  <!-- Auth buttons -->
+  <div class="auth-buttons">
+    <!-- Nếu chưa login -->
+    <div th:if="${not #authentication.authenticated}">
+      <button onclick="location.href='/auth/register'">Đăng ký</button>
+      <button onclick="location.href='/auth/login'">Đăng nhập</button>
     </div>
 
-  </header>
-</div>
+    <!-- Nếu đã login -->
+    <div th:if="${#authentication.authenticated}" style="display:flex; align-items:center; gap:8px;">
+      Xin chào, <span th:text="${#authentication.name}"></span>!
+      <span th:each="auth : ${#authentication.authorities}"
+            th:text="${auth.authority} + ' '"></span>
+      <button onclick="location.href='/auth/logout'">Đăng xuất</button>
+
+      <!-- Hiển thị nút 'Đăng tuyển' chỉ cho EMPLOYER hoặc ADMIN -->
+      <button onclick="location.href='/jobs/create'"
+              th:if="${#authorization.expression('hasRole(''EMPLOYER'') or hasRole(''ADMIN'')')}">
+        Đăng tuyển
+      </button>
+    </div>
+  </div>
+
+</header>
+
