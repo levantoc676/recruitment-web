@@ -25,8 +25,21 @@ public class DashboardController {
     model.addAttribute("user", user);
     model.addAttribute("isCreatePage", true);
 
+    // Tất cả job
     List<Job> allJob = jobRepository.findAll();
     model.addAttribute("jobs", allJob);
+
+    // Top 10 job mới nhất
+    List<Job> latestJobs = jobRepository.findTop10ByOrderBycreateDateDesc();
+    model.addAttribute("latestJobs", latestJobs);
+
+    // Top 10 job nhiều view nhất
+    List<Job> mostViewedJobs = jobRepository.findTop10ByOrderByViewsDesc();
+    model.addAttribute("mostViewedJobs", mostViewedJobs);
+
+    // Top 5 job sắp hết hạn
+    List<Job> expiringSoonJobs = jobRepository.findTop5ByOrderByDeadlineAsc();
+    model.addAttribute("expiringSoonJobs", expiringSoonJobs);
     return "index";
   }
 }

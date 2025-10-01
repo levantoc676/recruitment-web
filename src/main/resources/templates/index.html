@@ -5,7 +5,6 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Tìm Việc - TopCV.vn (Demo)</title> <!-- đổi tiêu đề để rõ đây là bản demo -->
   <link rel="stylesheet" th:href="@{/css/style.css}">
-
 </head>
 <body>
 <!-- Header -->
@@ -46,9 +45,60 @@
     </a>
   </div>
 
+  <!-- Top 10 Job mới nhất -->
+  <section class="job-listings">
+    <h2>Top 10 việc làm mới nhất</h2>
+    <div class="jobs">
+      <a th:href="@{/jobs/{id}(id=${job.jobId})}"
+         class="job-link"
+         th:each="job : ${latestJobs}">
+        <div class="job">
+          <h3 th:text="${job.title}"></h3>
+          <p th:text="${job.description}"></p>
+          <span th:text="${job.salaryRange + ' | ' + job.location}"></span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Job nhiều view nhất -->
+  <!-- Job nhiều view nhất -->
+  <section class="job-listings">
+    <h2>Việc làm nhiều lượt xem</h2>
+    <div class="jobs">
+      <a th:href="@{/jobs/{id}(id=${job.jobId})}"
+         class="job-link"
+         th:each="job : ${mostViewedJobs}">
+        <div class="job">
+          <h3 th:text="${job.title}"></h3>
+          <p th:text="${job.description}"></p>
+          <span th:text="${job.salaryRange + ' | ' + job.location}"></span>
+          <!-- Thêm số lượt xem -->
+          <span class="views">
+          👁️ <span th:text="${job.views}"></span> lượt xem
+        </span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+
+  <!-- Top 5 Job sắp hết hạn -->
+  <section class="job-listings">
+    <h2>Top 5 việc làm sắp hết hạn</h2>
+    <div class="jobs">
+      <a th:href="@{/jobs/{id}(id=${job.jobId})}"
+         class="job-link"
+         th:each="job : ${expiringSoonJobs}">
+        <div class="job">
+          <h3 th:text="${job.title}"></h3>
+          <p th:text="${job.description}"></p>
+          <span th:text="${'Hạn nộp: ' + job.deadline}"></span>
+        </div>
+      </a>
+    </div>
+  </section>
 </section>
-<!-- Footer -->
-<div th:replace="layout/footer :: footer"></div>
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -59,5 +109,24 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script th:src="@{/js/app.js}"></script>
+<!-- Footer -->
+<div th:replace="layout/footer :: footer"></div>
+<div class="fab-container">
+
+  <!-- Góp ý -->
+  <div class="fab-button">
+    <i class="fa-solid fa-comment-dots" style="color:#1E90FF;"></i>
+    <span>Góp ý</span>
+    <div class="fab-tooltip">Góp ý cho TopCV</div>
+  </div>
+
+  <!-- Hỗ trợ -->
+  <div class="fab-button">
+    <i class="fa-solid fa-headset" style="color:#32CD32;"></i>
+    <span>Hỗ trợ</span>
+    <div class="fab-tooltip">Trung tâm hỗ trợ ứng viên</div>
+  </div>
+
+</div>
 </body>
 </html>

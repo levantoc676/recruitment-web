@@ -40,6 +40,15 @@ public class Job {
   @Column(name = "company_name")
   private String companyName; // Tên công ty
 
+  @Column(name = "company_logo")
+  private String companyLogo; // Logo công ty
+
+  @Column(name = "company_address")
+  private String companyAddress; // Địa chỉ công ty
+
+  @Column(name = "company_website")
+  private String companyWebsite; // Website công ty
+
   // =============================
   // Nội dung công việc
   // =============================
@@ -122,7 +131,11 @@ public class Job {
   private List<JobApplication> applications; // Các ứng tuyển cho job này
   private Integer headcount;
   private String applicationMethod;
+
+  @Column(name = "contact_email")
   private String contactEmail;
+
+  @Column(name = "contact_phone")
   private String contactPhone;
 
   // =============================
