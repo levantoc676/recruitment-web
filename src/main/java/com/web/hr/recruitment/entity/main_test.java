@@ -3,7 +3,7 @@ package com.web.hr.recruitment.entity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class aa {
+public class main_test {
 
   public static void main(String[] args) {
     // Tạo PasswordEncoder

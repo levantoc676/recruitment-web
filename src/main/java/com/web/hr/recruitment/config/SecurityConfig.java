@@ -5,9 +5,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
 public class SecurityConfig {
@@ -21,12 +28,11 @@ public class SecurityConfig {
   // PasswordEncoder bean
   @Bean
   public PasswordEncoder passwordEncoder() {
-    //    return new BCryptPasswordEncoder();
+    // return new BCryptPasswordEncoder();
     return NoOpPasswordEncoder.getInstance(); // chỉ dùng trong dev
   }
 
-
-  // AuthenticationManager bean, dùng để Spring Security xử lý login
+  // AuthenticationManager bean
   @Bean
   public AuthenticationManager authenticationManager() {
     DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -51,8 +57,9 @@ public class SecurityConfig {
             .loginProcessingUrl("/auth/login-web")
             .usernameParameter("email")
             .passwordParameter("password")
-            .defaultSuccessUrl("/index", true)
-            .failureUrl("/auth/login?error") // show msg khi sai login
+            // thay vì defaultSuccessUrl → dùng custom success handler
+            .successHandler(customSuccessHandler())
+            .failureUrl("/auth/login?error")
         )
         .logout(logout -> logout
             .logoutUrl("/auth/logout")
@@ -60,5 +67,26 @@ public class SecurityConfig {
         );
 
     return http.build();
+  }
+
+  // Custom Success Handler để redirect theo role
+  @Bean
+  public AuthenticationSuccessHandler customSuccessHandler() {
+    return new AuthenticationSuccessHandler() {
+      @Override
+      public void onAuthenticationSuccess(HttpServletRequest request,
+          HttpServletResponse response,
+          Authentication authentication)
+          throws IOException, ServletException {
+
+        String authorities = authentication.getAuthorities().toString(); // [ROLE_ADMIN, ROLE_EMPLOYER,...]
+
+        if (authorities.contains("ADMIN")) {
+          response.sendRedirect("/admin/dashboard");
+        } else {
+          response.sendRedirect("/index");
+        }
+      }
+    };
   }
 }

@@ -1,3 +1,51 @@
-<footer>
-  <p>&copy; 2025 TopCV Demo. Tất cả quyền được bảo lưu.</p> <!-- đổi chữ TopCV.vn -> TopCV Demo -->
-</footer>
+<!-- templates/layout/footer.html -->
+<div th:fragment="footer" xmlns:th="http://www.thymeleaf.org">
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <!-- Thông tin công ty -->
+        <div class="footer-section company-info">
+          <h4>HR Portal</h4>
+          <p>Kết nối nhà tuyển dụng với ứng viên nhanh chóng và hiệu quả.</p>
+          <p>Email: support@hrportal.com</p>
+          <p>Hotline: 1900 1234</p>
+        </div>
+
+        <!-- Liên kết nhanh -->
+        <div class="footer-section quick-links">
+          <h4>Liên kết nhanh</h4>
+          <ul>
+            <li><a th:href="@{/jobs}">Việc làm</a></li>
+            <li><a th:href="@{/create-cv}">Tạo CV</a></li>
+            <li><a th:href="@{/tools}">Công cụ</a></li>
+            <li><a th:href="@{/blog}">Cẩm nang nghề nghiệp</a></li>
+          </ul>
+        </div>
+
+        <!-- Hỗ trợ & chính sách -->
+        <div class="footer-section support">
+          <h4>Hỗ trợ</h4>
+          <ul>
+            <li><a th:href="@{/faq}">FAQ</a></li>
+            <li><a th:href="@{/terms}">Điều khoản</a></li>
+            <li><a th:href="@{/privacy}">Chính sách bảo mật</a></li>
+          </ul>
+        </div>
+
+        <!-- Mạng xã hội -->
+        <div class="footer-section social">
+          <h4>Kết nối với chúng tôi</h4>
+          <div class="social-icons">
+            <a href="#" class="icon facebook">Facebook</a>
+            <a href="#" class="icon linkedin">LinkedIn</a>
+            <a href="#" class="icon youtube">YouTube</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 HR Portal. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</div>

@@ -1,15 +1,6 @@
-<!-- file chỉ là fragment, vẫn cần khai báo namespace -->
+<!-- templates/layout/header_login.html -->
 <div th:fragment="header" xmlns:th="http://www.thymeleaf.org">
-  <header>
-    <div class="logo">TopCV</div>
-    <nav>
-      <ul>
-        <li>Việc làm</li>
-        <li>Tạo CV</li>
-        <li>Công cụ</li>
-        <li>Cẩm nang nghề nghiệp</li>
-        <li>TopCV Pro</li>
-      </ul>
-    </nav>
+  <header class="login-header d-flex justify-content-between align-items-center" style="padding: 10px 20px; border-bottom:1px solid #e0e0e0; background-color:#fff;">
+    <a href="/" class="logo" style="font-size:1.6rem; font-weight:bold; color:#007bff; text-decoration:none;">TopCV</a>
   </header>
 </div>
