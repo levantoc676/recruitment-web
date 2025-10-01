@@ -1,6 +1,6 @@
 <!-- file chỉ là fragment, vẫn cần khai báo namespace -->
 <header th:fragment="header" xmlns:th="http://www.thymeleaf.org">
-  <div class="logo"><a href="/index" class="logo">TopCV</a></div>
+  <div class="logo"><a class="logo" href="/index">TopCV</a></div>
   <nav class="nav-menu">
     <ul>
       <li><a href="/jobs">Việc làm</a></li>
@@ -19,17 +19,32 @@
     </div>
 
     <!-- Nếu đã login -->
-    <div th:if="${#authentication.authenticated}" style="display:flex; align-items:center; gap:8px;">
+    <div style="display:flex; align-items:center; gap:8px;"
+         th:if="${#authentication.authenticated}">
       Xin chào, <span th:text="${#authentication.name}"></span>!
       <span th:each="auth : ${#authentication.authorities}"
             th:text="${auth.authority} + ' '"></span>
       <button onclick="location.href='/auth/logout'">Đăng xuất</button>
 
-      <!-- Hiển thị nút 'Đăng tuyển' chỉ cho EMPLOYER hoặc ADMIN -->
+      <!-- ADMIN → Quản lý -->
+      <button onclick="location.href='/admin/dashboard'"
+              th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        Quản lý
+      </button>
+
+      <!-- EMPLOYER → Đăng tuyển -->
       <button onclick="location.href='/jobs/create'"
-              th:if="${#authorization.expression('hasRole(''EMPLOYER'') or hasRole(''ADMIN'')')}">
+              th:if="${#authorization.expression('hasRole(''EMPLOYER'')')}">
         Đăng tuyển
       </button>
+
+      <!-- CANDIDATE → Tạo CV -->
+      <button onclick="location.href='/cvs/create'"
+              th:if="${#authorization.expression('hasRole(''CANDIDATE'')')}">
+        Tạo CV
+      </button>
+
+
     </div>
   </div>
 
