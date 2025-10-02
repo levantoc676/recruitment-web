@@ -7,13 +7,19 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class JobServiceImpl implements JobService {
 
-  private final JobRepository jobRepository;
+  @Autowired
+  private JobRepository jobRepository;
 
   @Override
   public Job saveJob(Job job) {
@@ -42,5 +48,26 @@ public class JobServiceImpl implements JobService {
   @Override
   public Optional<Job> findById(Long jobId) {
     return jobRepository.findById(jobId);
+  }
+
+  @Override
+  public long countJobs() {
+    return jobRepository.count();
+  }
+
+  @Override
+  public Page<Job> getJobs(int page, int size, String sort, String q) {
+    Pageable pageable;
+    if (sort != null && !sort.isEmpty()) {
+      String[] sortParams = sort.split(",");
+      Sort.Direction direction = sortParams.length > 1 && sortParams[1].equalsIgnoreCase("desc")
+          ? Sort.Direction.DESC : Sort.Direction.ASC;
+      pageable = PageRequest.of(page, size, Sort.by(direction, sortParams[0]));
+    } else {
+      pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createDate"));
+    }
+
+    // tạm thời chỉ trả tất cả jobs, có thể cải tiến search sau
+    return jobRepository.findAll(pageable);
   }
 }

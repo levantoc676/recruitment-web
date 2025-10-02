@@ -3,8 +3,8 @@
     <!-- Logo -->
     <div class="header-left">
       <div class="logo">
-        <a href="/index" class="logo-link">
-          <img src="/images/logo-topcv.png" alt="TopCV" class="logo-img">
+        <a class="logo-link" href="/index">
+          <img alt="TopCV" class="logo-img" src="/images/logo-topcv.png">
         </a>
       </div>
 
@@ -17,17 +17,17 @@
               <div class="mega-column">
                 <h4>Việc làm</h4>
                 <ul>
-                  <li><img src="/images/search-job.png" alt=""> Tìm việc làm</li>
-                  <li><img src="/images/saved-jobs.png" alt=""> Việc làm đã lưu</li>
-                  <li><img src="/images/applied-jobs.png" alt=""> Việc làm đã ứng tuyển</li>
-                  <li><img src="/images/suitable-jobs.png" alt=""> Việc làm phù hợp</li>
+                  <li><img alt="" src="/images/search-job.png"> Tìm việc làm</li>
+                  <li><img alt="" src="/images/saved-jobs.png"> Việc làm đã lưu</li>
+                  <li><img alt="" src="/images/applied-jobs.png"> Việc làm đã ứng tuyển</li>
+                  <li><img alt="" src="/images/suitable-jobs.png"> Việc làm phù hợp</li>
                 </ul>
               </div>
               <div class="mega-column">
                 <h4>Công ty</h4>
                 <ul>
-                  <li><img src="/images/company.png" alt=""> Danh sách công ty</li>
-                  <li><img src="/images/top-companies.png" alt=""> Top công ty</li>
+                  <li><img alt="" src="/images/company.png"> Danh sách công ty</li>
+                  <li><img alt="" src="/images/top-companies.png"> Top công ty</li>
                 </ul>
               </div>
               <div class="mega-column">
@@ -92,19 +92,36 @@
 
     <!-- Bên phải: Auth / User -->
     <div class="header-right">
-      <!-- Chưa login -->
-      <div class="auth-buttons" th:if="${not #authentication.authenticated}">
+      <!-- Nếu chưa login -->
+      <div th:if="${not #authentication.authenticated}">
         <button onclick="location.href='/auth/register'">Đăng ký</button>
         <button onclick="location.href='/auth/login'">Đăng nhập</button>
       </div>
 
-      <!-- Đã login -->
-      <div class="user-info" th:if="${#authentication.authenticated}">
-        <span class="username" th:text="${#authentication.name}">Tên Người Dùng</span>
+      <!-- Nếu đã login -->
+      <div style="display:flex; align-items:center; gap:8px;"
+           th:if="${#authentication.authenticated}">
+        Xin chào, <span th:text="${#authentication.name}"></span>!
+        <span th:each="auth : ${#authentication.authorities}"
+              th:text="${auth.authority} + ' '"></span>
         <button onclick="location.href='/auth/logout'">Đăng xuất</button>
+
+        <!-- ADMIN → Quản lý -->
+        <button onclick="location.href='/admin/dashboard'"
+                th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+          Quản lý
+        </button>
+
+        <!-- EMPLOYER → Đăng tuyển -->
         <button onclick="location.href='/jobs/create'"
-                th:if="${#authorization.expression('hasRole(''EMPLOYER'') or hasRole(''ADMIN'')')}">
+                th:if="${#authorization.expression('hasRole(''EMPLOYER'')')}">
           Đăng tuyển
+        </button>
+
+        <!-- CANDIDATE → Tạo CV -->
+        <button onclick="location.href='/cvs/create'"
+                th:if="${#authorization.expression('hasRole(''CANDIDATE'')')}">
+          Tạo CV
         </button>
       </div>
     </div>

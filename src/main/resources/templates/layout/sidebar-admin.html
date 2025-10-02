@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" th:fragment="sidebar">
+  <div class="position-sticky pt-3">
+    <h5 class="px-3 mt-3">Hệ thống</h5>
+    <ul class="nav flex-column">
+
+      <!-- Trang chủ site -->
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/}">🏠 Trang chủ</a>
+      </li>
+
+      <!-- Dashboard admin -->
+      <li class="nav-item">
+        <a class="nav-link active" th:href="@{/admin/dashboard}">📊 Dashboard Admin</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/admin/users}">👤 Quản lý Users</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/admin/jobs}">💼 Quản lý Jobs</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/admin/reports}">📑 Báo cáo</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-danger" th:href="@{/auth/logout}">🚪 Logout</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+</body>
+</html>

@@ -1,88 +1,62 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bảng điều khiển người dùng – quản lý CV, việc làm đã lưu và ứng tuyển.">
-    <title>CareerMint – Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/style-dashboard.css}">
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <div th:replace="layout/sidebar-admin :: sidebar"></div>
 
-<!-- ===== Sidebar Navigation ===== -->
-<aside class="sidebar">
-    <div class="sidebar-logo">CareerMint</div>
-    <nav>
-        <ul>
-            <li><a href="dashboard.html" class="active">Tổng quan</a></li>
-            <li><a href="#">CV của tôi</a></li>
-            <li><a href="#">Việc làm đã lưu</a></li>
-            <li><a href="#">Đã ứng tuyển</a></li>
-            <li><a href="#">Cài đặt</a></li>
-        </ul>
-    </nav>
-</aside>
+    <!-- Content -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2>Dashboard</h2>
+      </div>
 
-<!-- ===== Main Content ===== -->
-<div class="main-content">
-    <!-- Topbar -->
-    <header class="topbar">
-        <div class="welcome">
-            <h1>Xin chào, Lợi!</h1>
-            <p>Hãy tiếp tục hành trình tìm việc hôm nay.</p>
+      <div class="row">
+        <!-- Box thống kê -->
+        <div class="col-md-4">
+          <div class="card shadow-sm mb-3">
+            <div class="card-body">
+              <h5 class="card-title">👥 Tổng số Users</h5>
+              <p class="card-text display-6" th:text="${totalUsers}">0</p>
+            </div>
+          </div>
         </div>
-        <div class="user-info">
-            <img src="images/avatar.jpg" alt="Ảnh đại diện" class="avatar">
-            <span class="username">levanloi</span>
+        <div class="col-md-4">
+          <div class="card shadow-sm mb-3">
+            <div class="card-body">
+              <h5 class="card-title">💼 Tổng số Jobs</h5>
+              <p class="card-text display-6" col-md-4 th:text="${totalJobs}">0</p>
+            </div>
+          </div>
         </div>
-    </header>
+      </div>
 
-    <!-- Thống kê nhanh -->
-    <section class="stats-grid">
-        <div class="stat-card">
-            <h3>3</h3>
-            <p>CV đã tạo</p>
+      <!-- Nội dung chính -->
+      <div class="card mt-4">
+        <div class="card-header">
+          Nội dung chính
         </div>
-        <div class="stat-card">
-            <h3>7</h3>
-            <p>Việc làm đã lưu</p>
+        <div class="card-body">
+          <p>Chọn chức năng bên trái để quản lý.</p>
+          <p>Xin chào <b th:text="${#authentication.name}">Admin</b>!</p>
+          <p>Role: <span th:text="${#authentication.authorities}"></span></p>
         </div>
-        <div class="stat-card">
-            <h3>2</h3>
-            <p>Đang ứng tuyển</p>
-        </div>
-    </section>
+      </div>
 
-    <!-- Danh sách việc làm -->
-    <section class="jobs-section">
-        <h2>Việc làm đã lưu</h2>
-        <div class="jobs-list">
-            <article class="job-row">
-                <div>
-                    <h3>Lập trình viên Back-End</h3>
-                    <p>Công ty TechNova – Hà Nội</p>
-                </div>
-                <a href="#" class="btn-view">Chi tiết</a>
-            </article>
-            <article class="job-row">
-                <div>
-                    <h3>Chuyên viên Data</h3>
-                    <p>Insight Corp – Đà Nẵng</p>
-                </div>
-                <a href="#" class="btn-view">Chi tiết</a>
-            </article>
-        </div>
-    </section>
+    </main>
+  </div>
+</div>
 
-</div> <!-- end main-content -->
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-<!-- Bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script th:src="@{/js/app.js}"></script>
 </body>
 </html>

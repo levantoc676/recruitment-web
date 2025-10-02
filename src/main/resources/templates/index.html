@@ -36,7 +36,7 @@
 <section class="job-listings">
   <h2>Danh sách việc làm</h2>
   <div class="jobs">
-    <a th:href="@{/jobs/{id}(id=${job.jobId})}" class="job-link" th:each="job : ${jobs}">
+    <a class="job-link" th:each="job : ${jobs}" th:href="@{/jobs/{id}(id=${job.jobId})}">
       <div class="job">
         <h3 th:text="${job.title}"></h3>
         <p th:text="${job.description}"></p>

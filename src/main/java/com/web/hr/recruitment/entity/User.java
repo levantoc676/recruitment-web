@@ -55,8 +55,10 @@ public class User {
   // =============================
   private LocalDateTime createDate = LocalDateTime.now(); // Ngày tạo
   private LocalDateTime updatedDate = LocalDateTime.now(); // Ngày cập nhật
+  @Column(nullable = false)
   private Boolean delFlg = true; // Cờ xóa mềm (true = xóa, false = còn)
-
+  @Column(nullable = false)
+  private Boolean locked = false; // false = tài khoản chưa bị khóa, true = bị khóa
   // =============================
   // Quan hệ với CV
   // =============================
