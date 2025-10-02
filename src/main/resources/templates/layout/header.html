@@ -1,37 +1,112 @@
-<!-- file chỉ là fragment, vẫn cần khai báo namespace -->
 <header th:fragment="header" xmlns:th="http://www.thymeleaf.org">
-  <div class="logo"><a href="/index" class="logo">TopCV</a></div>
-  <nav class="nav-menu">
-    <ul>
-      <li><a href="/jobs">Việc làm</a></li>
-      <li><a href="/cv/create">Tạo CV</a></li>
-      <li><a href="/tools">Công cụ</a></li>
-      <li><a href="/blog">Cẩm nang nghề nghiệp</a></li>
-      <li><a href="/pro">TopCV Pro</a></li>
-    </ul>
-  </nav>
-  <!-- Auth buttons -->
-  <div class="auth-buttons">
-    <!-- Nếu chưa login -->
-    <div th:if="${not #authentication.authenticated}">
-      <button onclick="location.href='/auth/register'">Đăng ký</button>
-      <button onclick="location.href='/auth/login'">Đăng nhập</button>
+  <div class="header-container">
+    <!-- Logo -->
+    <div class="header-left">
+      <div class="logo">
+        <a href="/index" class="logo-link">
+          <img src="/images/logo-topcv.png" alt="TopCV" class="logo-img">
+        </a>
+      </div>
+
+      <!-- Menu chính -->
+      <nav class="nav-menu">
+        <ul>
+          <li class="menu-item">
+            <a href="/jobs">Việc làm</a>
+            <div class="mega-menu">
+              <div class="mega-column">
+                <h4>Việc làm</h4>
+                <ul>
+                  <li><img src="/images/search-job.png" alt=""> Tìm việc làm</li>
+                  <li><img src="/images/saved-jobs.png" alt=""> Việc làm đã lưu</li>
+                  <li><img src="/images/applied-jobs.png" alt=""> Việc làm đã ứng tuyển</li>
+                  <li><img src="/images/suitable-jobs.png" alt=""> Việc làm phù hợp</li>
+                </ul>
+              </div>
+              <div class="mega-column">
+                <h4>Công ty</h4>
+                <ul>
+                  <li><img src="/images/company.png" alt=""> Danh sách công ty</li>
+                  <li><img src="/images/top-companies.png" alt=""> Top công ty</li>
+                </ul>
+              </div>
+              <div class="mega-column">
+                <h4>Việc làm theo vị trí</h4>
+                <ul>
+                  <li>Việc làm Nhân viên kinh doanh</li>
+                  <li>Việc làm Kế toán</li>
+                  <li>Việc làm Marketing</li>
+                  <li>Việc làm Hành chính nhân sự</li>
+                  <li>Việc làm Chăm sóc khách hàng</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+          <li class="menu-item">
+            <a href="/cv/create">Tạo CV</a>
+            <div class="mega-menu">
+              <div class="mega-column">
+                <h4>Tạo CV</h4>
+                <ul>
+                  <li>CV Chuyên nghiệp</li>
+                  <li>CV Nhanh</li>
+                  <li>CV theo ngành nghề</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+          <li class="menu-item">
+            <a href="/tools">Công cụ</a>
+            <div class="mega-menu">
+              <div class="mega-column">
+                <h4>Công cụ</h4>
+                <ul>
+                  <li>Ứng dụng TopCV</li>
+                  <li>Test IQ / EQ</li>
+                  <li>Mẫu hợp đồng</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+          <li class="menu-item">
+            <a href="/blog">Cẩm nang nghề nghiệp</a>
+            <div class="mega-menu">
+              <div class="mega-column">
+                <h4>Cẩm nang</h4>
+                <ul>
+                  <li>Kinh nghiệm phỏng vấn</li>
+                  <li>Hướng dẫn viết CV</li>
+                  <li>Mẹo tìm việc</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+          <li><a href="/pro">TopCV Pro</a></li>
+        </ul>
+      </nav>
     </div>
 
-    <!-- Nếu đã login -->
-    <div th:if="${#authentication.authenticated}" style="display:flex; align-items:center; gap:8px;">
-      Xin chào, <span th:text="${#authentication.name}"></span>!
-      <span th:each="auth : ${#authentication.authorities}"
-            th:text="${auth.authority} + ' '"></span>
-      <button onclick="location.href='/auth/logout'">Đăng xuất</button>
+    <!-- Bên phải: Auth / User -->
+    <div class="header-right">
+      <!-- Chưa login -->
+      <div class="auth-buttons" th:if="${not #authentication.authenticated}">
+        <button onclick="location.href='/auth/register'">Đăng ký</button>
+        <button onclick="location.href='/auth/login'">Đăng nhập</button>
+      </div>
 
-      <!-- Hiển thị nút 'Đăng tuyển' chỉ cho EMPLOYER hoặc ADMIN -->
-      <button onclick="location.href='/jobs/create'"
-              th:if="${#authorization.expression('hasRole(''EMPLOYER'') or hasRole(''ADMIN'')')}">
-        Đăng tuyển
-      </button>
+      <!-- Đã login -->
+      <div class="user-info" th:if="${#authentication.authenticated}">
+        <span class="username" th:text="${#authentication.name}">Tên Người Dùng</span>
+        <button onclick="location.href='/auth/logout'">Đăng xuất</button>
+        <button onclick="location.href='/jobs/create'"
+                th:if="${#authorization.expression('hasRole(''EMPLOYER'') or hasRole(''ADMIN'')')}">
+          Đăng tuyển
+        </button>
+      </div>
     </div>
   </div>
-
 </header>
-
