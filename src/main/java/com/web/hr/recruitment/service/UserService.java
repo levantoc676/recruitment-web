@@ -1,6 +1,6 @@
 package com.web.hr.recruitment.service;
 
-import com.web.hr.recruitment.entity.User;
+import com.web.hr.recruitment.entity.user.User;
 import java.util.List;
 import org.springframework.data.domain.Page;
 
@@ -21,4 +21,10 @@ public interface UserService {
   boolean lockUser(Long userId);
 
   boolean unlockUser(Long userId);
+
+  boolean createPasswordResetToken(String email);
+
+  void resetPassword(String token, String newPassword);
+
+  String validatePasswordResetToken(String token);
 }

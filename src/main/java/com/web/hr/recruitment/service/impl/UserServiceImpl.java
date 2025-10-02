@@ -1,12 +1,17 @@
 package com.web.hr.recruitment.service.impl;
 
-import com.web.hr.recruitment.entity.User;
-import com.web.hr.recruitment.repository.UserRepository;
+import com.web.hr.recruitment.entity.user.PasswordResetToken;
+import com.web.hr.recruitment.entity.user.User;
+import com.web.hr.recruitment.repository.user.PasswordResetTokenRepository;
+import com.web.hr.recruitment.repository.user.UserRepository;
 import com.web.hr.recruitment.service.UserService;
+import com.web.hr.recruitment.util.EmailUtil;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +19,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +31,12 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   @Autowired
   private PasswordEncoder passwordEncoder;
+  @Autowired
+  private EmailUtil emailUtil;
+  @Autowired
+  private PasswordResetTokenRepository passwordResetTokenRepository;
+  @Autowired
+  private JavaMailSender mailSender;
 
   @Override
   public Page<User> getUsers(int page, int size, String sort, String role, String q) {
@@ -140,4 +153,79 @@ public class UserServiceImpl implements UserService {
         })
         .orElse(false);
   }
+
+  // Gửi link reset
+  public boolean createPasswordResetToken(String email) {
+    Optional<User> userOpt = userRepository.findByEmail(email);
+    if (userOpt.isEmpty()) {
+      return false; // Không tìm thấy user
+    }
+
+    try {
+      User user = userOpt.get();
+      String token = UUID.randomUUID().toString();
+
+      PasswordResetToken resetToken = new PasswordResetToken();
+      resetToken.setToken(token);
+      resetToken.setUser(user);
+      resetToken.setExpiryDate(LocalDateTime.now().plusMinutes(15));
+
+      passwordResetTokenRepository.save(resetToken);
+
+      // Gửi email
+      String resetUrl = "http://localhost:8080/admin/reset-password?token=" + token;
+
+      SimpleMailMessage message = new SimpleMailMessage();
+      message.setTo(user.getEmail());
+      message.setSubject("Password Reset Request");
+      message.setText("Click the link to reset your password: " + resetUrl);
+
+      mailSender.send(message);
+
+      return true; // Thành công
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false; // Có lỗi khi gửi mail hoặc lưu DB
+    }
+  }
+
+  // Xác nhận token và đặt lại mật khẩu mới
+  public void resetPassword(String token, String newPassword) {
+    Optional<PasswordResetToken> tokenOpt = passwordResetTokenRepository.findByToken(token);
+    if (tokenOpt.isEmpty()) {
+      throw new RuntimeException("Invalid token");
+    }
+
+    PasswordResetToken resetToken = tokenOpt.get();
+
+    if (resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+      throw new RuntimeException("Token expired");
+    }
+
+    User user = resetToken.getUser();
+    user.setPassword(passwordEncoder.encode(newPassword));
+    userRepository.save(user);
+
+    // Xoá token sau khi dùng
+    passwordResetTokenRepository.delete(resetToken);
+  }
+
+  public String validatePasswordResetToken(String token) {
+    Optional<PasswordResetToken> resetTokenOpt = passwordResetTokenRepository.findByToken(token);
+
+    // Không tìm thấy token
+    if (resetTokenOpt.isEmpty()) {
+      return "invalid";
+    }
+
+    PasswordResetToken resetToken = resetTokenOpt.get();
+
+    // Token hết hạn
+    if (resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+      return "expired";
+    }
+    return null; // hợp lệ
+  }
+
+
 }

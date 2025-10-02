@@ -1,5 +1,3 @@
-package com.web.hr.recruitment.entity;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

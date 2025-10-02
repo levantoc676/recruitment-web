@@ -1,16 +1,11 @@
 package com.web.hr.recruitment.controller;
 
-import com.web.hr.recruitment.entity.User;
-import com.web.hr.recruitment.repository.UserRepository;
+import com.web.hr.recruitment.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/auth")
@@ -21,27 +16,26 @@ public class AuthController {
 
   @GetMapping("/login")
   public String login() {
-    System.out.println("AAAAAAAAAAAAAAAAA");
     return "auth/login";
   }
 
-  @PostMapping("/login-web")
-  public String login(@RequestParam String email,
-      @RequestParam String password,
-      Model model, HttpSession session) {
-    System.out.println("XXXXXXXXXXXXXXXXXXX");
-    Optional<User> userOpt = userRepository.findByUser(email, password);
-    if (userOpt.isPresent()) {
-      // Login thành công -> chuyển tới index
-      session.setAttribute("user", userOpt.get());
-      return "redirect:/index";
-    } else {
-      // Login thất bại -> hiển thị message trên trang login
-      model.addAttribute("errorMessage", "Sai tên đăng nhập hoặc mật khẩu");
-      model.addAttribute("email", email);  // giữ email nhập
-      return "auth/login";  // Không redirect, trả về template
-    }
-  }
+//  @PostMapping("/login-web")
+//  public String login(@RequestParam String email,
+//      @RequestParam String password,
+//      Model model, HttpSession session) {
+//    System.out.println("XXXXXXXXXXXXXXXXXXX");
+//    Optional<User> userOpt = userRepository.findByUser(email, password);
+//    if (userOpt.isPresent()) {
+//      // Login thành công -> chuyển tới index
+//      session.setAttribute("user", userOpt.get());
+//      return "redirect:/index";
+//    } else {
+//      // Login thất bại -> hiển thị message trên trang login
+//      model.addAttribute("errorMessage", "Sai tên đăng nhập hoặc mật khẩu");
+//      model.addAttribute("email", email);  // giữ email nhập
+//      return "auth/login";  // Không redirect, trả về template
+//    }
+//  }
 
   // URL: http://localhost:8080/auth/register
   @GetMapping("/register")

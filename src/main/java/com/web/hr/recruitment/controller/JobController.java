@@ -1,8 +1,8 @@
 package com.web.hr.recruitment.controller;
 
 import com.web.hr.recruitment.entity.Job;
-import com.web.hr.recruitment.entity.User;
-import com.web.hr.recruitment.repository.UserRepository;
+import com.web.hr.recruitment.entity.user.User;
+import com.web.hr.recruitment.repository.user.UserRepository;
 import com.web.hr.recruitment.service.JobService;
 import java.io.IOException;
 import java.nio.file.Files;

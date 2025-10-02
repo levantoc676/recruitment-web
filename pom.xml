@@ -12,6 +12,7 @@
     </plugins>
   </build>
   <dependencies>
+
     <dependency>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
       <groupId>org.springframework.boot</groupId>
@@ -59,6 +60,10 @@
       <artifactId>lombok</artifactId>
       <groupId>org.projectlombok</groupId>
       <version>1.18.30</version>
+    </dependency>
+    <dependency>
+      <artifactId>spring-boot-starter-mail</artifactId>
+      <groupId>org.springframework.boot</groupId>
     </dependency>
   </dependencies>
   <description>Building human resource recruitment software</description>

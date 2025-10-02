@@ -1,6 +1,6 @@
 package com.web.hr.recruitment.controller.admin;
 
-import com.web.hr.recruitment.entity.User;
+import com.web.hr.recruitment.entity.user.User;
 import com.web.hr.recruitment.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,5 +91,65 @@ public class AdminUserController {
     userService.unlockUser(userId);
     redirectAttributes.addFlashAttribute("message", "User đã được mở khóa");
     return "redirect:/admin/users";
+  }
+
+  // Hiển thị form nhập email
+  @GetMapping("/forgot-password")
+  public String showForgotPasswordForm(Model model) {
+    return "auth/forgot-password"; // Trỏ tới file forgot-password.html
+  }
+
+  // Xử lý gửi link reset
+  @PostMapping("/forgot-password")
+  public String forgotPassword(@RequestParam String email, Model model) {
+    boolean result = userService.createPasswordResetToken(email);
+
+    if (result) {
+      model.addAttribute("message", "Link đặt lại mật khẩu đã được gửi đến email của bạn.");
+    } else {
+      model.addAttribute("error", "Email không tồn tại trong hệ thống.");
+    }
+
+    return "auth/forgot-password";
+  }
+
+  @GetMapping("/reset-password")
+  public String showResetPasswordForm(@RequestParam String token, Model model) {
+    String result = userService.validatePasswordResetToken(token);
+
+    if (result != null) {
+      // token invalid hoặc expired
+      model.addAttribute("error", "Link đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.");
+      return "forgot_password"; // quay lại trang quên mật khẩu
+    }
+
+    // token hợp lệ → truyền xuống form reset
+    model.addAttribute("token", token);
+    return "auth/reset_password"; // hiển thị form reset_password.html
+  }
+
+  @PostMapping("/reset-password")
+  public String resetPassword(@RequestParam String token,
+      @RequestParam String newPassword,
+      @RequestParam String confirmPassword,
+      Model model) {
+    // Kiểm tra token
+    String result = userService.validatePasswordResetToken(token);
+    if (result != null) {
+      model.addAttribute("error", "Token không hợp lệ hoặc đã hết hạn.");
+      return "reset_password";
+    }
+
+    // Kiểm tra confirm password
+    if (!newPassword.equals(confirmPassword)) {
+      model.addAttribute("error", "Mật khẩu xác nhận không khớp.");
+      model.addAttribute("token", token);
+      return "reset_password";
+    }
+
+    // Reset mật khẩu
+    userService.resetPassword(token, newPassword);
+    model.addAttribute("message", "Đặt lại mật khẩu thành công. Bạn có thể đăng nhập ngay.");
+    return "redirect:/auth/login";
   }
 }

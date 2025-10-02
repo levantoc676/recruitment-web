@@ -1,5 +1,8 @@
-package com.web.hr.recruitment.entity;
+package com.web.hr.recruitment.entity.user;
 
+import com.web.hr.recruitment.entity.AdminLog;
+import com.web.hr.recruitment.entity.CV;
+import com.web.hr.recruitment.entity.Job;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,6 +1,6 @@
-package com.web.hr.recruitment.repository;
+package com.web.hr.recruitment.repository.user;
 
-import com.web.hr.recruitment.entity.User;
+import com.web.hr.recruitment.entity.user.User;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +13,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   @Query(value = "SELECT * FROM users WHERE email = :email AND password = :password", nativeQuery = true)
   Optional<User> findByUser(@Param("email") String email, @Param("password") String password);
+
+  Optional<User> findByUserId(Long userId);
 
   Optional<User> findByEmail(String email);
 

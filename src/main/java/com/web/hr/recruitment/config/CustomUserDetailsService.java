@@ -1,7 +1,7 @@
 package com.web.hr.recruitment.config;
 
-import com.web.hr.recruitment.entity.User;
-import com.web.hr.recruitment.repository.UserRepository;
+import com.web.hr.recruitment.entity.user.User;
+import com.web.hr.recruitment.repository.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

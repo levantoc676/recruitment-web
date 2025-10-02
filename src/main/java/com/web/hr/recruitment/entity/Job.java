@@ -1,5 +1,6 @@
 package com.web.hr.recruitment.entity;
 
+import com.web.hr.recruitment.entity.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

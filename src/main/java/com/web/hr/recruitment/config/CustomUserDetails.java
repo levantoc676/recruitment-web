@@ -1,6 +1,6 @@
 package com.web.hr.recruitment.config;
 
-import com.web.hr.recruitment.entity.User;
+import com.web.hr.recruitment.entity.user.User;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;

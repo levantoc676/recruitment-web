@@ -1,5 +1,6 @@
 package com.web.hr.recruitment.entity;
 
+import com.web.hr.recruitment.entity.user.User;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
