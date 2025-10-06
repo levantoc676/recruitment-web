@@ -38,7 +38,7 @@ public class CustomUserDetails implements UserDetails {
 
   @Override
   public String getUsername() {
-    return user.getEmail(); // bạn có thể trả về email nếu muốn login bằng email
+    return user.getUsername(); // bạn có thể trả về email nếu muốn login bằng email
   }
 
   @Override

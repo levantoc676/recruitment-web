@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="jobsContent">
+  <h4>Quản lý Jobs</h4>
+  <p>Danh sách công việc:</p>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>ID</th><th>Tiêu đề</th><th>Công ty</th><th>Ngày tạo</th><th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="job : ${jobs}">
+      <td th:text="${job.id}"></td>
+      <td th:text="${job.title}"></td>
+      <td th:text="${job.companyName}"></td>
+      <td th:text="${job.createdAt}"></td>
+      <td>
+        <a th:href="@{'/admin/jobs/edit/' + ${job.id}}" class="btn btn-sm btn-primary">Sửa</a>
+        <a th:href="@{'/admin/jobs/delete/' + ${job.id}}" class="btn btn-sm btn-danger">Xóa</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
