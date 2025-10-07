@@ -1,8 +1,9 @@
 package com.web.hr.recruitment.controller;
 
 import com.web.hr.recruitment.config.CustomUserDetails;
-import com.web.hr.recruitment.entity.User;
-import com.web.hr.recruitment.repository.UserRepository;
+
+import com.web.hr.recruitment.entity.user.User;
+import com.web.hr.recruitment.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
