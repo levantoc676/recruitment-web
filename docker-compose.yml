@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: recruitment-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password_here
+      MYSQL_DATABASE: recruitment_db
+      MYSQL_USER: recruitment_user
+      MYSQL_PASSWORD: "123456"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: recruitment-app
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/recruitment_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Bangkok
+      SPRING_DATASOURCE_USERNAME: recruitment_user
+      SPRING_DATASOURCE_PASSWORD: "123456"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - mysql
+
+volumes:
+  mysql-data:
