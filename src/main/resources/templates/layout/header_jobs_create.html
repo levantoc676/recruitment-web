@@ -1,0 +1,26 @@
+<!-- file chỉ là fragment, vẫn cần khai báo namespace -->
+<div th:fragment="header_jobs_create" xmlns:th="http://www.thymeleaf.org">
+  <header>
+    <div class="logo"><a href="/index" class="logo">ELITE</a></div>
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="/jobs">Giới thiệu</a></li>
+        <li><a href="/cv/create">Dịch vụ</a></li>
+        <li><a href="/tools">Báo giá</a></li>
+        <li><a href="/blog">Hỗ trợ</a></li>
+        <li><a href="/pro">Blog tuyển dụng</a></li>
+      </ul>
+    </nav>
+    <div class="auth-buttons">
+      <!-- Nếu đã login -->
+      <div th:if="${#authentication.authenticated}">
+        Xin chào, <span th:text="${#authentication.name}"></span>!
+        <button onclick="location.href='/auth/logout'">Đăng xuất</button>
+        <span th:each="auth : ${#authentication.authorities}"
+              th:text="${auth.authority} + ' '"></span>
+
+      </div>
+    </div>
+
+  </header>
+</div>

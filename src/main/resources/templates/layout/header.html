@@ -1,13 +1,197 @@
-<!-- file chỉ là fragment, vẫn cần khai báo namespace -->
-<div xmlns:th="http://www.thymeleaf.org" th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" th:href="@{/}">Recruitment Web</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" th:href="@{/jobs}">Jobs</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/candidate/profile}">Profile</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
-            </ul>
+<header th:fragment="header" xmlns:th="http://www.thymeleaf.org">
+  <div class="header-container">
+    <!-- Logo -->
+    <div class="header-left">
+      <div class="logo">
+        <a class="logo-link" href="/index">
+          <img alt="ELITE" class="logo-img" src="/images/logo.png">
+        </a>
+      </div>
+
+      <!-- Menu chính -->
+      <nav class="nav-menu">
+        <ul>
+          <li class="menu-item">
+            <a href="#">Việc làm</a>
+            <div class="mega-menu">
+              <div class="mega-column">
+                <h4>Việc làm</h4>
+                <ul>
+                  <li><img alt="" src="/images/search-job.png"> Tìm việc làm</li>
+                  <li><img alt="" src="/images/saved-jobs.png"> Việc làm đã lưu</li>
+                  <li><img alt="" src="/images/applied-jobs.png"> Việc làm đã ứng tuyển</li>
+                  <li><img alt="" src="/images/suitable-jobs.png"> Việc làm phù hợp</li>
+                </ul>
+              </div>
+              <div class="mega-column">
+                <h4>Công ty</h4>
+                <ul>
+                  <li><img alt="" src="/images/company.png"> Danh sách công ty</li>
+                  <li><img alt="" src="/images/top-companies.png"> Top công ty</li>
+                </ul>
+              </div>
+              <div class="mega-column">
+                <h4>Việc làm theo vị trí</h4>
+                <ul>
+                  <li>Việc làm Nhân viên kinh doanh</li>
+                  <li>Việc làm Kế toán</li>
+                  <li>Việc làm Marketing</li>
+                  <li>Việc làm Hành chính nhân sự</li>
+                  <li>Việc làm Chăm sóc khách hàng</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+          <li class="menu-item">
+            <a href="#">Tạo CV</a>
+            <div class="mega-menu">
+              <div class="mega-column">
+                <h4>Tạo CV</h4>
+                <ul>
+                  <li>CV Chuyên nghiệp</li>
+                  <li>CV Nhanh</li>
+                  <li>CV theo ngành nghề</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+          <li class="menu-item">
+            <a href="#">Công cụ</a>
+            <div class="mega-menu">
+              <div class="mega-column">
+                <h4>Công cụ</h4>
+                <ul>
+                  <li>Ứng dụng ELITE</li>
+                  <li>Test IQ / EQ</li>
+                  <li>Mẫu hợp đồng</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+          <li class="menu-item">
+            <a href="#">Cẩm nang nghề nghiệp</a>
+            <div class="mega-menu">
+              <div class="mega-column">
+                <h4>Cẩm nang</h4>
+                <ul>
+                  <li>Kinh nghiệm phỏng vấn</li>
+                  <li>Hướng dẫn viết CV</li>
+                  <li>Mẹo tìm việc</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+          <li><a href="#">ELITE Pro</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Bên phải: Auth / User -->
+    <div class="header-right">
+      <!-- Nếu chưa login -->
+      <div th:if="${not #authentication.authenticated}">
+        <button onclick="location.href='/auth/register'">Đăng ký</button>
+        <button onclick="location.href='/auth/login'">Đăng nhập</button>
+      </div>
+
+      <!-- Nếu đã login -->
+      <div th:if="${#authentication.authenticated}" class="profile-container">
+
+        <div class="profile-trigger">
+          <i class="fa-solid fa-user"></i>
         </div>
-    </nav>
-</div>
+
+        <div class="profile-menu">
+          <div class="user-info">
+            <div class="avatar">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="details">
+              <strong th:text="${#authentication.name}">Tên người dùng</strong>
+              <small>Tài khoản đã xác thực</small>
+              <span th:text="'ID: ' + ${currentUser.userId}">ID: 10004499</span>
+              <span th:text="${currentUser.email}">email@example.com</span>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="menu-section">
+            <div class="section-header">
+              <span><i class="fa-solid fa-briefcase"></i> Quản lý tìm việc</span>
+              <i class="fa-solid fa-chevron-down toggle-icon"></i> </div>
+            <ul class="section-body hidden"> <li><a href="#">Việc làm đã lưu</a></li>
+              <li><a href="#">Việc làm đã ứng tuyển</a></li>
+              <li><a href="#">Việc làm phù hợp với bạn</a></li>
+              <li><a href="#">Cài đặt gợi ý việc làm</a></li>
+            </ul>
+          </div>
+
+          <div class="menu-section">
+            <div class="section-header">
+              <span><i class="fa-solid fa-file-lines"></i> Quản lý CV & Cover Letter</span>
+              <i class="fa-solid fa-chevron-down toggle-icon"></i>
+            </div>
+            <ul class="section-body hidden">
+              <li><a href="#">CV của tôi</a></li>
+              <li><a href="#">Cover Letter của tôi</a></li>
+              <li><a href="#">Nhà tuyển dụng muốn kết nối với bạn</a></li>
+              <li><a href="#">Nhà tuyển dụng xem hồ sơ</a></li>
+            </ul>
+          </div>
+
+          <div class="menu-section">
+            <div class="section-header">
+              <span><i class="fa-solid fa-envelope"></i> Cài đặt email & thông báo</span>
+              <i class="fa-solid fa-chevron-down toggle-icon"></i>
+            </div>
+            <ul class="section-body hidden">
+              <li><a href="#">Cài đặt thông báo việc làm</a></li>
+              <li><a href="#">Cài đặt nhận email</a></li>
+            </ul>
+          </div>
+
+          <div class="menu-section">
+            <div class="section-header">
+              <span><i class="fa-solid fa-shield-halved"></i> Cá nhân & Bảo mật</span>
+              <i class="fa-solid fa-chevron-down toggle-icon"></i>
+            </div>
+            <ul class="section-body hidden">
+              <li><a href="#">Cài đặt thông tin cá nhân</a></li>
+              <li><a href="#">Cài đặt bảo mật</a></li>
+              <li><a href="#">Đổi mật khẩu</a></li>
+            </ul>
+          </div>
+          <hr>
+          <button class="logout-btn" onclick="location.href='/auth/logout'">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất
+          </button>
+        </div>
+      </div>
+
+        <!-- ADMIN → Quản lý -->
+        <button class="btn btn-admin" onclick="location.href='/admin/dashboard'"
+                th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+          Quản lý
+        </button>
+
+        <!-- EMPLOYER → Đăng tuyển -->
+        <button class="btn btn-employer" onclick="location.href='/jobs/create'"
+                th:if="${#authorization.expression('hasRole(''EMPLOYER'')')}">
+          Đăng tuyển
+        </button>
+
+        <!-- CANDIDATE → Tạo CV -->
+        <button class="btn btn-candidate" onclick="location.href='/cvs/create'"
+                th:if="${#authorization.expression('hasRole(''CANDIDATE'')')}">
+          Tạo CV
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+

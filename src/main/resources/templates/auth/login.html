@@ -1,41 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Login - Recruitment Web</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}">
-    <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+  <meta charset="UTF-8">
+  <title>Login - Recruitment Web</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/auth-login.css}">
 </head>
 <body>
-<div th:replace="layout/header :: header"></div>
+<div th:insert="~{layout/header_login :: header}"></div>
 
 <main class="container mt-4">
-    <h2 class="text-center">Login</h2>
-    <form method="post" th:action="@{/login}" class="w-50 mx-auto">
-        <div class="mb-3">
-            <label>Email</label>
-            <input type="email" class="form-control" name="email" required>
-        </div>
-        <div class="mb-3">
-            <label>Password</label>
-            <input type="password" class="form-control" name="password" required>
-        </div>
-        <button class="btn btn-primary w-100">Login</button>
-        <p class="mt-3 text-center">
-            Don’t have an account? <a th:href="@{/register}">Register</a>
-        </p>
-    </form>
+  <h2 class="text-center">Login</h2>
+  <form class="w-50 mx-auto" method="post" th:action="@{/auth/login-web}">
+    <div class="mb-3">
+      <label>Email</label>
+      <input class="form-control" name="email" required
+             th:value="${email != null ? email : 'employer1@example.com'}" type="email">
+      <!-- giữ email khi login thất bại -->
+    </div>
+    <div class="mb-3">
+      <label>Password</label>
+      <input class="form-control" name="password" required type="password">
+    </div>
+    <!-- Hiển thị message khi login fail -->
+    <div style="color:red;" th:if="${param.error}">
+      Sai tên đăng nhập hoặc mật khẩu
+    </div>
+    <button class="btn btn-primary w-100">Login</button>
+
+    <!-- Link Forgot Password -->
+    <div class="mt-3 text-center">
+      <a th:href="@{/admin/forgot-password}">Quên mật khẩu?</a>
+    </div>
+
+    <p class="mt-3 text-center">
+      Don’t have an account? <a th:href="@{/register}">Register</a>
+    </p>
+  </form>
 </main>
-
-<div th:replace="layout/footer :: footer"></div>
-
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
 <!-- Bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 <script th:src="@{/js/app.js}"></script>
 </body>
 </html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách việc làm</title>
+  <link rel="stylesheet" th:href="@{/css/job-list.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div th:replace="layout/header :: header"></div>
+<div class="container mt-4">
+
+  <h2 class="mb-4">Danh sách việc làm</h2>
+
+  <!-- Nút tạo tin mới -->
+  <div class="mb-3 text-end">
+    <a class="btn btn-success" href="/jobs/create">+ Đăng tin tuyển dụng</a>
+  </div>
+
+  <!-- Bảng danh sách công việc -->
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+    <tr>
+      <th>Tiêu đề</th>
+      <th>Công ty</th>
+      <th>Địa điểm</th>
+      <th>Mức lương</th>
+      <th>Loại công việc</th>
+      <th>Ngày đăng</th>
+      <th>Thao tác</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="job : ${jobs}">
+      <td th:text="${job.title}">Java Developer</td>
+      <!--      <td th:text="${job.employer.name}">Công ty ABC</td>-->
+      <td th:text="${job.location}">Hồ Chí Minh</td>
+      <td th:text="${job.salaryRange}">10 - 15 triệu</td>
+      <td th:text="${job.jobType}">Full-time</td>
+      <!--      <td th:text="${#dates.format(job.createDate, 'dd/MM/yyyy')}">28/09/2025</td>-->
+      <td>
+        <a class="btn btn-info btn-sm" th:href="@{'/jobs/' + ${job.jobId}}">Xem</a>
+        <a class="btn btn-warning btn-sm" th:href="@{'/jobs/edit/' + ${job.jobId}}">Sửa</a>
+        <a class="btn btn-danger btn-sm"
+           onclick="return confirm('Bạn có chắc muốn xóa tin này?');"
+           th:href="@{'/jobs/delete/' + ${job.jobId}}">Xóa</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+</body>
+<!--<div th:replace="layout/footer :: footer"></div>-->
+</html>

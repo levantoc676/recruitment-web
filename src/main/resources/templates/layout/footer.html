@@ -1,3 +1,118 @@
-<div xmlns:th="http://www.thymeleaf.org" th:fragment="footer" class="bg-light text-center py-3">
-    <p class="mb-0">&copy; 2025 Recruitment Web. All rights reserved.</p>
-</div>
+<footer class="footer">
+  <div class="footer-container max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row justify-between gap-8">
+    <!-- Left column: Logo & Contact -->
+    <div class="footer-left flex-1">
+      <div class="footer-logo flex items-center gap-3 mb-4">
+        <img src="logo.png" alt="Logo" />
+        <p class="slogan">RecruitmentWeb - Kết nối nhà tuyển dụng & ứng viên</p>
+      </div>
+      <ul class="contact-info">
+        <li><i class="fa fa-map-marker-alt"></i> Tầng 5, Tòa nhà XYZ, Quận Cầu Giấy, Hà Nội</li>
+        <li><i class="fa fa-envelope"></i> <a href="mailto:contact@recruitmentweb.vn">contact@recruitmentweb.vn</a></li>
+        <li><i class="fa fa-phone"></i> <a href="tel:0987654321">0987 654 321</a></li>
+        <li><i class="fa fa-clock"></i> 08:30 - 17:30 (Thứ 2 - Thứ 6)</li>
+      </ul>
+    </div>
+
+    <!-- Right column: Links & Subscription -->
+    <div class="footer-right flex-1 flex flex-col gap-6">
+      <div class="footer-links grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="links-section">
+          <h4>Dành cho ứng viên</h4>
+          <ul>
+            <li><a href="#">Việc làm mới nhất</a></li>
+            <li><a href="#">Tạo hồ sơ online</a></li>
+            <li><a href="#">Cẩm nang nghề nghiệp</a></li>
+          </ul>
+        </div>
+        <div class="links-section">
+          <h4>Dành cho nhà tuyển dụng</h4>
+          <ul>
+            <li><a href="#">Đăng tin tuyển dụng</a></li>
+            <li><a href="#">Tìm kiếm hồ sơ</a></li>
+            <li><a href="#">Bảng giá dịch vụ</a></li>
+          </ul>
+        </div>
+        <div class="links-section">
+          <h4>Hỗ trợ & Chính sách</h4>
+          <ul>
+            <li><a href="#">Trung tâm trợ giúp</a></li>
+            <li><a href="#">Chính sách bảo mật</a></li>
+            <li><a href="#">Điều khoản sử dụng</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Subscription & Social -->
+      <div class="footer-subscribe">
+        <h4>Đăng ký nhận bản tin việc làm</h4>
+        <form id="subscribeForm" autocomplete="off">
+          <label for="emailInput" class="sr-only">Email</label>
+          <input id="emailInput" type="email" placeholder="Nhập email của bạn" required />
+          <button type="submit">Đăng ký</button>
+        </form>
+        <div class="social-icons mt-4 flex gap-3">
+          <a href="#" aria-label="Facebook" class="facebook">
+            <span class="svgContainer">
+              <svg fill="white" height="1.6em" viewBox="0 0 320 512">
+                <path d="M279.14 288l14.22-92.66h-88.91V127.89c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.5 0 225.36 0c-73.22 0-121.09 44.38-121.09 124.72V195.3H22.89V288h81.38v224h100.2V288z"/>
+              </svg>
+            </span>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="linkedin">
+            <span class="svgContainer">
+              <svg fill="white" height="1.6em" viewBox="0 0 448 512">
+                <path d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"/>
+              </svg>
+            </span>
+          </a>
+          <a href="#" aria-label="YouTube" class="youtube">
+            <span class="svgContainer">
+              <svg fill="white" height="1.6em" viewBox="0 0 576 512">
+                <path d="M549.655 124.083c-6.281-23.725-24.958-42.401-48.684-48.684C465.362 64 288 64 288 64s-177.362 0-212.971 11.399c-23.726 6.283-42.403 24.959-48.684 48.684C16 159.692 16 256 16 256s0 96.308 10.345 131.917c6.281 23.725 24.958 42.401 48.684 48.684C110.638 448 288 448 288 448s177.362 0 212.971-11.399c23.726-6.283 42.403-24.959 48.684-48.684C560 352.308 560 256 560 256s0-96.308-10.345-131.917zM232 334V178l142 78-142 78z"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom text-center py-3">
+    <p>&copy; 2025 RecruitmentWeb. All rights reserved.</p>
+  </div>
+</footer>
+
+
+<!-- Tailwind + Font Awesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script>
+  /**
+   * Toggle dark/light mode for the page.
+   * Accessible button is injected at bottom right.
+   */
+  const createDarkModeToggle = () => {
+    const toggleBtn = document.createElement('button');
+    toggleBtn.textContent = 'Chuyển chế độ sáng/tối';
+    toggleBtn.setAttribute('aria-label', 'Chuyển chế độ sáng/tối');
+    toggleBtn.className = 'fixed bottom-4 right-4 px-4 py-2 rounded bg-gray-800 text-white shadow-lg z-50 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500';
+    document.body.appendChild(toggleBtn);
+
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+    });
+  };
+
+  createDarkModeToggle();
+
+  /**
+   * Handle subscription form submit.
+   * Shows a thank you alert.
+   * @param {Event} e
+   */
+  const subscribeForm = document.getElementById('subscribeForm');
+  subscribeForm?.addEventListener('submit', e => {
+    e.preventDefault();
+    alert('Cảm ơn bạn đã đăng ký!');
+  });
+</script>

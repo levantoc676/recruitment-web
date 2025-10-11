@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="usersContent">
+  <h4>Quản lý Users</h4>
+  <p>Danh sách người dùng hiện tại:</p>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>ID</th><th>Tên</th><th>Email</th><th>Vai trò</th><th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+      <td th:text="${user.id}"></td>
+      <td th:text="${user.fullName}"></td>
+      <td th:text="${user.email}"></td>
+      <td th:text="${user.role}"></td>
+      <td>
+        <a th:href="@{'/admin/users/edit/' + ${user.id}}" class="btn btn-sm btn-primary">Sửa</a>
+        <a th:href="@{'/admin/users/delete/' + ${user.id}}" class="btn btn-sm btn-danger">Xóa</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

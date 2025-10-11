@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${job.title}">Chi tiết công việc</title>
+  <link rel="stylesheet" th:href="@{/css/job-detail.css}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- Header chung -->
+<div th:replace="~{layout/header :: header}"></div>
+
+<!-- Breadcrumb -->
+<div class="container mt-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a th:href="@{/jobs/list}">Việc làm</a></li>
+      <li class="breadcrumb-item active" aria-current="page" th:text="${job.title}">Java Developer</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="container job-container mt-4">
+
+  <!-- Main content -->
+  <div class="job-main">
+
+    <!-- Job Header -->
+    <div class="job-header card p-3 mb-4 shadow-sm slide-up">
+      <img th:if="${job.companyLogo != null}" th:src="@{'/images/' + ${job.companyLogo}}"
+           alt="Logo công ty" class="job-logo animate-logo">
+      <div class="job-info">
+        <h1 th:text="${job.title}">Tên công việc</h1>
+        <p th:text="${job.location}">Địa điểm</p>
+        <p th:text="${job.companyName}">Tên công ty</p>
+      </div>
+    </div>
+
+    <!-- Job General Info -->
+    <div class="row job-general-info mb-4">
+      <div class="col-md-6">
+        <div class="info-item"><strong>Mức lương:</strong> <span th:text="${job.salaryRange}">10-15 triệu</span></div>
+        <div class="info-item"><strong>Loại công việc:</strong> <span th:text="${job.jobType}">Full-time</span></div>
+        <div class="info-item"><strong>Hình thức làm việc:</strong> <span th:text="${job.workMode}">Onsite</span></div>
+        <div class="info-item"><strong>Số lượng tuyển:</strong> <span th:text="${job.headcount}">3</span></div>
+      </div>
+      <div class="col-md-6">
+        <div class="info-item"><strong>Ngày đăng:</strong> <span th:text="${#temporals.format(job.createDate, 'dd/MM/yyyy HH:mm')}"></span></div>
+        <div class="info-item"><strong>Hạn nộp hồ sơ:</strong> <span th:text="${#temporals.format(job.deadline, 'dd/MM/yyyy')}"></span></div>
+        <div class="info-item"><strong>Lượt xem:</strong> <span th:text="${job.views}">123</span></div>
+        <div class="info-item"><strong>Người đăng tuyển:</strong> <span th:text="${job.user.username}">Nguyễn Văn A</span></div>
+      </div>
+    </div>
+
+    <!-- Job Description -->
+    <div class="job-box card p-3 mb-4 shadow-sm slide-up">
+      <h5>Mô tả công việc</h5>
+      <div class="job-description" th:utext="${job.description}"></div>
+    </div>
+
+    <!-- Job Requirements -->
+    <div class="job-box card p-3 mb-4 shadow-sm slide-up">
+      <h5>Yêu cầu ứng viên</h5>
+      <div id="job-requirements" th:utext="${job.requirements}"></div>
+    </div>
+
+    <!-- Job Benefits -->
+    <div class="job-box card p-3 mb-4 shadow-sm slide-up">
+      <h5>Quyền lợi</h5>
+      <div id="job-benefits" th:utext="${job.benefits}"></div>
+    </div>
+
+    <!-- Job Skills -->
+    <div class="job-box card p-3 mb-4 shadow-sm slide-up">
+      <h5>Kỹ năng cần có</h5>
+      <ul class="job-skills">
+        <li th:each="skill : ${job.skills}" th:text="${skill}"></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Sidebar -->
+  <div class="job-sidebar ms-4">
+    <div class="card p-3 shadow-sm mb-4">
+      <button class="apply-btn btn btn-primary w-100">Ứng tuyển ngay</button>
+    </div>
+    <div class="card p-3 shadow-sm">
+      <h5>Thông tin liên hệ</h5>
+      <p><strong>Email:</strong> <span th:text="${job.contactEmail}">hr@abc.com</span></p>
+      <p><strong>Số điện thoại:</strong> <span th:text="${job.contactPhone}">0123456789</span></p>
+      <p><strong>Website:</strong> <a th:href="${job.companyWebsite}" target="_blank" th:text="${job.companyWebsite}">https://abc.com</a></p>
+    </div>
+  </div>
+</div>
+<script>
+  const boxes = document.querySelectorAll('.slide-up');
+  window.addEventListener('scroll', () => {
+      boxes.forEach(box => {
+          const rect = box.getBoundingClientRect();
+          if(rect.top < window.innerHeight - 50) box.classList.add('scroll-visible');
+      });
+  });
+</script>
+<!-- Footer -->
+<div th:replace="~{layout/footer :: footer}"></div>
+
+</body>
+</html>

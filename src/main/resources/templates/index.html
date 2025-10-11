@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Tìm Việc - ELITE.vn</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+<!-- Header -->
+<div th:replace="layout/header :: header"></div>
+
+<!-- Banner & Search -->
+<section class="banner mb-4 py-5" style="background: linear-gradient(135deg, #4e73df, #1cc88a); color:white;">
+  <div class="container">
+    <h1 class="text-center mb-4">ELITE - Tạo CV, Tìm việc làm, Tuyển dụng hiệu quả</h1>
+    <form class="search-bar d-flex justify-content-center gap-2 flex-wrap" action="/search" method="GET">
+      <input class="form-control" name="keyword" style="max-width:220px; border-radius:50px;" placeholder="Vị trí tuyển dụng, tên công ty" type="text">
+      <input class="form-control" name="location" style="max-width:180px; border-radius:50px;" placeholder="Địa điểm" type="text">
+      <button class="btn btn-light text-dark" style="border-radius:50px;" type="submit">
+        <i class="fa fa-search me-1"></i> Tìm kiếm
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- Categories -->
+<section class="categories mb-2">
+  <ul class="list-inline text-center">
+    <li class="list-inline-item mx-2">Kinh doanh/Bán hàng</li>
+    <li class="list-inline-item mx-2">Marketing/PR/Quảng cáo</li>
+    <li class="list-inline-item mx-2">Chăm sóc khách hàng</li>
+    <li class="list-inline-item mx-2">Nhân sự/Hành chính/Pháp chế</li>
+    <li class="list-inline-item mx-2">Công nghệ Thông tin</li>
+    <li class="list-inline-item mx-2">Lao động phổ thông</li>
+  </ul>
+</section>
+
+<!-- Tabbed Job Listings -->
+<div class="container mb-5">
+  <ul class="nav nav-tabs mb-3 justify-content-center" id="jobTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="all-jobs-tab" data-bs-toggle="tab" data-bs-target="#all-jobs" type="button" role="tab" aria-controls="all-jobs" aria-selected="true">
+        Danh sách việc làm
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="latest-jobs-tab" data-bs-toggle="tab" data-bs-target="#latest-jobs" type="button" role="tab" aria-controls="latest-jobs" aria-selected="false">
+        Top 10 việc làm mới nhất
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="most-viewed-jobs-tab" data-bs-toggle="tab" data-bs-target="#most-viewed-jobs" type="button" role="tab" aria-controls="most-viewed-jobs" aria-selected="false">
+        Việc làm nhiều lượt xem
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="expiring-jobs-tab" data-bs-toggle="tab" data-bs-target="#expiring-jobs" type="button" role="tab" aria-controls="expiring-jobs" aria-selected="false">
+        Top 5 việc làm sắp hết hạn
+      </button>
+    </li>
+  </ul>
+  <div class="tab-content" id="jobTabContent">
+    <!-- Danh sách việc làm -->
+    <div class="tab-pane fade show active" id="all-jobs" role="tabpanel" aria-labelledby="all-jobs-tab">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4 mb-3" th:each="job : ${jobs}">
+          <a class="text-decoration-none" th:href="@{/jobs/{id}(id=${job.jobId})}">
+            <div class="job-card">
+              <h3 th:text="${job.title}"></h3>
+              <p th:text="${job.description}"></p>
+              <div class="meta">
+                <span th:text="${job.salaryRange + ' | ' + job.location}"></span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- Top 10 việc làm mới nhất -->
+    <div class="tab-pane fade" id="latest-jobs" role="tabpanel" aria-labelledby="latest-jobs-tab">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4 mb-3" th:each="job : ${latestJobs}">
+          <a class="text-decoration-none" th:href="@{/jobs/{id}(id=${job.jobId})}">
+            <div class="job-card">
+              <h3 th:text="${job.title}"></h3>
+              <p th:text="${job.description}"></p>
+              <div class="meta">
+                <span th:text="${job.salaryRange + ' | ' + job.location}"></span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- Việc làm nhiều lượt xem -->
+    <div class="tab-pane fade" id="most-viewed-jobs" role="tabpanel" aria-labelledby="most-viewed-jobs-tab">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4 mb-3" th:each="job : ${mostViewedJobs}">
+          <a class="text-decoration-none" th:href="@{/jobs/{id}(id=${job.jobId})}">
+            <div class="job-card">
+              <h3 th:text="${job.title}"></h3>
+              <p th:text="${job.description}"></p>
+              <div class="meta">
+                <span th:text="${job.salaryRange + ' | ' + job.location}"></span>
+                <span class="views">
+                  <i class="fa fa-eye"></i>
+                  <span th:text="${job.views}"></span> lượt xem
+                </span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- Top 5 việc làm sắp hết hạn -->
+    <div class="tab-pane fade" id="expiring-jobs" role="tabpanel" aria-labelledby="expiring-jobs-tab">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4 mb-3" th:each="job : ${expiringSoonJobs}">
+          <a class="text-decoration-none" th:href="@{/jobs/{id}(id=${job.jobId})}">
+            <div class="job-card">
+              <h3 th:text="${job.title}"></h3>
+              <p th:text="${job.description}"></p>
+              <div class="meta">
+                <span th:text="${'Hạn nộp: ' + job.deadline}"></span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/app.js}"></script>
+<script>
+
+  document.addEventListener('DOMContentLoaded', () => {
+   document.querySelectorAll('.menu-section').forEach(section => {
+     const header = section.querySelector('.section-header');
+     const body = section.querySelector('.section-body');
+     const icon = header.querySelector('.toggle-icon');
+
+     if (!header || !body) return;
+
+     // Đóng tất cả khi load
+     body.classList.add('hidden');
+     body.style.maxHeight = '0px';
+     icon.classList.remove('rotate');
+
+     header.addEventListener('click', () => {
+       // Đóng tất cả các section khác
+       document.querySelectorAll('.menu-section').forEach(otherSection => {
+         if (otherSection !== section) {
+           const otherBody = otherSection.querySelector('.section-body');
+           const otherIcon = otherSection.querySelector('.toggle-icon');
+           otherBody.classList.add('hidden');
+           otherBody.style.maxHeight = '0px';
+           otherIcon.classList.remove('rotate');
+         }
+       });
+
+       // Toggle section hiện tại
+       if (body.classList.contains('hidden')) {
+         body.classList.remove('hidden');
+         body.style.maxHeight = body.scrollHeight + 'px';
+         icon.classList.add('rotate');
+       } else {
+         body.classList.add('hidden');
+         body.style.maxHeight = '0px';
+         icon.classList.remove('rotate');
+       }
+     });
+   });
+ });
+
+   // Smooth tab fade-in/out animation using Bootstrap events
+   document.addEventListener('DOMContentLoaded', function () {
+     const tabLinks = document.querySelectorAll('#jobTab .nav-link');
+     tabLinks.forEach(link => {
+       link.addEventListener('show.bs.tab', function (e) {
+         const targetPane = document.querySelector(link.getAttribute('data-bs-target'));
+         document.querySelectorAll('.tab-pane').forEach(pane => {
+           pane.classList.remove('active');
+         });
+         setTimeout(() => {
+           targetPane.classList.add('active');
+         }, 10);
+       });
+     });
+   });
+</script>
+
+<!-- Footer -->
+<div th:replace="layout/footer :: footer"></div>
+<div class="fab-container">
+  <!-- Góp ý -->
+  <div class="fab-button">
+    <i class="fa-solid fa-comment-dots" style="color:#1E90FF;"></i>
+    <span>Góp ý</span>
+    <div class="fab-tooltip">Góp ý cho ELITE</div>
+  </div>
+  <!-- Hỗ trợ -->
+  <div class="fab-button">
+    <i class="fa-solid fa-headset" style="color:#32CD32;"></i>
+    <span>Hỗ trợ</span>
+    <div class="fab-tooltip">Trung tâm hỗ trợ ứng viên</div>
+  </div>
+</div>
+</body>
+</html>
